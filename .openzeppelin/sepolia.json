@@ -1,0 +1,1992 @@
+{
+  "manifestVersion": "3.2",
+  "proxies": [
+    {
+      "address": "0x206F3ac8Dd7DCd0681cf0D760AeBD6111D17c687",
+      "txHash": "0x326362ac8b160fd0e1c8f27f724eaec36cf3d0e95f98afa18336dfbd817c7c7b",
+      "kind": "uups"
+    },
+    {
+      "address": "0x6725331525a49051e0caf0927696896eD30e27b9",
+      "txHash": "0xc949212149e07017e890d95ad0076b6d8a2d874cb9351e2b423ae11ce83f2903",
+      "kind": "uups"
+    },
+    {
+      "address": "0xf19d5A1ab4F4DD9714800676fCB00CA48aEaD819",
+      "txHash": "0x3b69e76635fede8b3265c502f36715009fcad430d5cd12bfa6c86aa9b6ac852e",
+      "kind": "uups"
+    },
+    {
+      "address": "0xa3Cc399ee9b75edf5E0E85B2895caD09a1a59515",
+      "txHash": "0xa7557f0f57616c151a1556336c27b274f75114a35445f2908b1765a3e4ad346d",
+      "kind": "uups"
+    },
+    {
+      "address": "0x57612c0347cFDe7f1a1dfF1c0995D888cA5A59B7",
+      "txHash": "0xae0e5c76c874af4b33692d79694162bb764b9c989a13528e44d153d6a2d1bd30",
+      "kind": "uups"
+    }
+  ],
+  "impls": {
+    "dc558e66733d93bc085cf360f898928c898ec17ee202832efc4e30375f587242": {
+      "address": "0xc2F76d5D864e3f789eD4E65035D6F01C887e8402",
+      "txHash": "0x7c5db9a67bdcfb457d3fec8b097a759dd8cdf095a2cec13fdb5d6b31d02062b7",
+      "layout": {
+        "solcVersion": "0.8.25",
+        "storage": [
+          {
+            "label": "nextReceiptId",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256",
+            "contract": "ConfidentialReceipt",
+            "src": "contracts\\ConfidentialReceipt.sol:19"
+          },
+          {
+            "label": "receipts",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_mapping(t_uint256,t_struct(Receipt)28051_storage)",
+            "contract": "ConfidentialReceipt",
+            "src": "contracts\\ConfidentialReceipt.sol:20"
+          },
+          {
+            "label": "invoiceReceipts",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)",
+            "contract": "ConfidentialReceipt",
+            "src": "contracts\\ConfidentialReceipt.sol:21"
+          },
+          {
+            "label": "userReceipts",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
+            "contract": "ConfidentialReceipt",
+            "src": "contracts\\ConfidentialReceipt.sol:22"
+          },
+          {
+            "label": "invoiceContract",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_address",
+            "contract": "ConfidentialReceipt",
+            "src": "contracts\\ConfidentialReceipt.sol:24"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ConfidentialReceipt",
+            "src": "contracts\\ConfidentialReceipt.sol:107"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_struct(InitializableStorage)6240_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(OwnableStorage)6029_storage": {
+            "label": "struct OwnableUpgradeable.OwnableStorage",
+            "members": [
+              {
+                "label": "_owner",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(address => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(uint256 => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(Receipt)28051_storage)": {
+            "label": "mapping(uint256 => struct ConfidentialReceipt.Receipt)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Receipt)28051_storage": {
+            "label": "struct ConfidentialReceipt.Receipt",
+            "members": [
+              {
+                "label": "id",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "invoiceId",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "payer",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "issuer",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "encryptedAmount",
+                "type": "t_userDefinedValueType(euint128)28",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "timestamp",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              }
+            ],
+            "numberOfBytes": "192"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_userDefinedValueType(euint128)28": {
+            "label": "euint128",
+            "numberOfBytes": "32",
+            "underlying": "t_uint256"
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.Ownable": [
+            {
+              "contract": "OwnableUpgradeable",
+              "label": "_owner",
+              "type": "t_address",
+              "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:24",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "@openzeppelin\\contracts\\proxy\\utils\\Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin\\contracts\\proxy\\utils\\Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    },
+    "8160ae46f0f4a6939cef33ba989a4d4573bdfc3853ea109c6dcab8062dd7678c": {
+      "address": "0xD520a5e25f11c34F5681b1099a70e82B83a01E79",
+      "txHash": "0x40ede63bda982d5bb5c793054e2fa98276ade3e2010635424ed393ace02de5f9",
+      "layout": {
+        "solcVersion": "0.8.25",
+        "storage": [
+          {
+            "label": "stats",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_mapping(t_address,t_struct(UserStats)28345_storage)",
+            "contract": "InvoiceAnalytics",
+            "src": "contracts\\InvoiceAnalytics.sol:19"
+          },
+          {
+            "label": "invoiceContract",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_address",
+            "contract": "InvoiceAnalytics",
+            "src": "contracts\\InvoiceAnalytics.sol:20"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "InvoiceAnalytics",
+            "src": "contracts\\InvoiceAnalytics.sol:142"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_struct(InitializableStorage)6240_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(OwnableStorage)6029_storage": {
+            "label": "struct OwnableUpgradeable.OwnableStorage",
+            "members": [
+              {
+                "label": "_owner",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_mapping(t_address,t_struct(UserStats)28345_storage)": {
+            "label": "mapping(address => struct InvoiceAnalytics.UserStats)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(UserStats)28345_storage": {
+            "label": "struct InvoiceAnalytics.UserStats",
+            "members": [
+              {
+                "label": "totalInvoiced",
+                "type": "t_userDefinedValueType(euint128)28",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "totalReceived",
+                "type": "t_userDefinedValueType(euint128)28",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "totalPaid",
+                "type": "t_userDefinedValueType(euint128)28",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "invoiceCount",
+                "type": "t_userDefinedValueType(euint32)24",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "paymentCount",
+                "type": "t_userDefinedValueType(euint32)24",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "initialized",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "5"
+              }
+            ],
+            "numberOfBytes": "192"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_userDefinedValueType(euint128)28": {
+            "label": "euint128",
+            "numberOfBytes": "32",
+            "underlying": "t_uint256"
+          },
+          "t_userDefinedValueType(euint32)24": {
+            "label": "euint32",
+            "numberOfBytes": "32",
+            "underlying": "t_uint256"
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.Ownable": [
+            {
+              "contract": "OwnableUpgradeable",
+              "label": "_owner",
+              "type": "t_address",
+              "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:24",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "@openzeppelin\\contracts\\proxy\\utils\\Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin\\contracts\\proxy\\utils\\Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    },
+    "34dae45bc63ac871c035fe4d04be137a0fb7f332356e5d9251379ab0f61c0ca7": {
+      "address": "0xD559Caa0f3CF515A561e463d99732aF6736DD82b",
+      "txHash": "0x7e01e18de11b15b0e939fd9d674d8bc9de3bb6edee27e0a877211de995067c9d",
+      "layout": {
+        "solcVersion": "0.8.25",
+        "storage": [
+          {
+            "label": "nextInvoiceId",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256",
+            "contract": "ConfidentialInvoice",
+            "src": "contracts\\ConfidentialInvoice.sol:58"
+          },
+          {
+            "label": "invoices",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_mapping(t_uint256,t_struct(Invoice)25769_storage)",
+            "contract": "ConfidentialInvoice",
+            "src": "contracts\\ConfidentialInvoice.sol:59"
+          },
+          {
+            "label": "lineItems",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_struct(LineItem)25729_storage))",
+            "contract": "ConfidentialInvoice",
+            "src": "contracts\\ConfidentialInvoice.sol:60"
+          },
+          {
+            "label": "issuerInvoices",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
+            "contract": "ConfidentialInvoice",
+            "src": "contracts\\ConfidentialInvoice.sol:61"
+          },
+          {
+            "label": "buyerInvoices",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
+            "contract": "ConfidentialInvoice",
+            "src": "contracts\\ConfidentialInvoice.sol:62"
+          },
+          {
+            "label": "receiptContract",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_contract(IConfidentialReceipt)25681",
+            "contract": "ConfidentialInvoice",
+            "src": "contracts\\ConfidentialInvoice.sol:64"
+          },
+          {
+            "label": "analyticsContract",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_contract(IInvoiceAnalytics)25700",
+            "contract": "ConfidentialInvoice",
+            "src": "contracts\\ConfidentialInvoice.sol:65"
+          },
+          {
+            "label": "delegatedAccess",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "ConfidentialInvoice",
+            "src": "contracts\\ConfidentialInvoice.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ConfidentialInvoice",
+            "src": "contracts\\ConfidentialInvoice.sol:441"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_struct(InitializableStorage)6240_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(OwnableStorage)6029_storage": {
+            "label": "struct OwnableUpgradeable.OwnableStorage",
+            "members": [
+              {
+                "label": "_owner",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_contract(IConfidentialReceipt)25681": {
+            "label": "contract IConfidentialReceipt",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IInvoiceAnalytics)25700": {
+            "label": "contract IInvoiceAnalytics",
+            "numberOfBytes": "20"
+          },
+          "t_enum(Status)25714": {
+            "label": "enum ConfidentialInvoice.Status",
+            "members": [
+              "Created",
+              "Sent",
+              "PartiallyPaid",
+              "Paid",
+              "Overdue",
+              "Disputed",
+              "Cancelled"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(address => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(uint256 => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_struct(LineItem)25729_storage))": {
+            "label": "mapping(uint256 => mapping(uint256 => struct ConfidentialInvoice.LineItem))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(Invoice)25769_storage)": {
+            "label": "mapping(uint256 => struct ConfidentialInvoice.Invoice)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(LineItem)25729_storage)": {
+            "label": "mapping(uint256 => struct ConfidentialInvoice.LineItem)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Invoice)25769_storage": {
+            "label": "struct ConfidentialInvoice.Invoice",
+            "members": [
+              {
+                "label": "id",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "encryptedIssuer",
+                "type": "t_userDefinedValueType(eaddress)32",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "encryptedBuyer",
+                "type": "t_userDefinedValueType(eaddress)32",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "issuer",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "buyer",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "subtotal",
+                "type": "t_userDefinedValueType(euint128)28",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "amountPaid",
+                "type": "t_userDefinedValueType(euint128)28",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "orderIdHash",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "7"
+              },
+              {
+                "label": "memoHash",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "8"
+              },
+              {
+                "label": "encCurrency",
+                "type": "t_userDefinedValueType(euint8)20",
+                "offset": 0,
+                "slot": "9"
+              },
+              {
+                "label": "lineItemCount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "10"
+              },
+              {
+                "label": "dueDate",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "11"
+              },
+              {
+                "label": "status",
+                "type": "t_enum(Status)25714",
+                "offset": 0,
+                "slot": "12"
+              },
+              {
+                "label": "createdAt",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "13"
+              },
+              {
+                "label": "auditEnabled",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "14"
+              },
+              {
+                "label": "isPaidInFull",
+                "type": "t_userDefinedValueType(ebool)18",
+                "offset": 0,
+                "slot": "15"
+              }
+            ],
+            "numberOfBytes": "512"
+          },
+          "t_struct(LineItem)25729_storage": {
+            "label": "struct ConfidentialInvoice.LineItem",
+            "members": [
+              {
+                "label": "descriptionHash",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "quantity",
+                "type": "t_userDefinedValueType(euint32)24",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "unitPrice",
+                "type": "t_userDefinedValueType(euint128)28",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "amount",
+                "type": "t_userDefinedValueType(euint128)28",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_userDefinedValueType(eaddress)32": {
+            "label": "eaddress",
+            "numberOfBytes": "32",
+            "underlying": "t_uint256"
+          },
+          "t_userDefinedValueType(ebool)18": {
+            "label": "ebool",
+            "numberOfBytes": "32",
+            "underlying": "t_uint256"
+          },
+          "t_userDefinedValueType(euint128)28": {
+            "label": "euint128",
+            "numberOfBytes": "32",
+            "underlying": "t_uint256"
+          },
+          "t_userDefinedValueType(euint32)24": {
+            "label": "euint32",
+            "numberOfBytes": "32",
+            "underlying": "t_uint256"
+          },
+          "t_userDefinedValueType(euint8)20": {
+            "label": "euint8",
+            "numberOfBytes": "32",
+            "underlying": "t_uint256"
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.Ownable": [
+            {
+              "contract": "OwnableUpgradeable",
+              "label": "_owner",
+              "type": "t_address",
+              "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:24",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "@openzeppelin\\contracts\\proxy\\utils\\Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin\\contracts\\proxy\\utils\\Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    },
+    "1d6793b4a60df0648d0d46c74979a221e5cdda65c8949795ff8a7f45bb72207f": {
+      "address": "0x4DA9ccb99F3a3c353FAE5Bf00A57B26C7627dd75",
+      "txHash": "0xfb288d1046b097a351acba0d614589bc738232e84e47d35156e4e2ec57cec6fa",
+      "layout": {
+        "solcVersion": "0.8.25",
+        "storage": [
+          {
+            "label": "nextEscrowId",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256",
+            "contract": "ConfidentialEscrow",
+            "src": "contracts\\ConfidentialEscrow.sol:28"
+          },
+          {
+            "label": "escrows",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_mapping(t_uint256,t_struct(Escrow)25089_storage)",
+            "contract": "ConfidentialEscrow",
+            "src": "contracts\\ConfidentialEscrow.sol:29"
+          },
+          {
+            "label": "invoiceToEscrow",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "ConfidentialEscrow",
+            "src": "contracts\\ConfidentialEscrow.sol:30"
+          },
+          {
+            "label": "userEscrows",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
+            "contract": "ConfidentialEscrow",
+            "src": "contracts\\ConfidentialEscrow.sol:31"
+          },
+          {
+            "label": "arbiter",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_address",
+            "contract": "ConfidentialEscrow",
+            "src": "contracts\\ConfidentialEscrow.sol:33"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ConfidentialEscrow",
+            "src": "contracts\\ConfidentialEscrow.sol:177"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_struct(InitializableStorage)6240_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(OwnableStorage)6029_storage": {
+            "label": "struct OwnableUpgradeable.OwnableStorage",
+            "members": [
+              {
+                "label": "_owner",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_enum(EscrowStatus)25070": {
+            "label": "enum ConfidentialEscrow.EscrowStatus",
+            "members": [
+              "Active",
+              "Released",
+              "Refunded",
+              "Disputed"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(address => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(Escrow)25089_storage)": {
+            "label": "mapping(uint256 => struct ConfidentialEscrow.Escrow)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Escrow)25089_storage": {
+            "label": "struct ConfidentialEscrow.Escrow",
+            "members": [
+              {
+                "label": "id",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "invoiceId",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "depositor",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "beneficiary",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "encryptedAmount",
+                "type": "t_userDefinedValueType(euint128)28",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "status",
+                "type": "t_enum(EscrowStatus)25070",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "createdAt",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "releaseDeadline",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "7"
+              }
+            ],
+            "numberOfBytes": "256"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_userDefinedValueType(euint128)28": {
+            "label": "euint128",
+            "numberOfBytes": "32",
+            "underlying": "t_uint256"
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.Ownable": [
+            {
+              "contract": "OwnableUpgradeable",
+              "label": "_owner",
+              "type": "t_address",
+              "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:24",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "@openzeppelin\\contracts\\proxy\\utils\\Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin\\contracts\\proxy\\utils\\Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    },
+    "99471fa8827744eaccc0dc4fd61bf83a2c5924e5d3ec1303c4f2b0330ed08799": {
+      "address": "0x0793181E283119B691C42DF17A38D107F4eFd1A8",
+      "txHash": "0xc704455ac2a8baa39804e7d760d8f7fc5fccfbe3ddf952920b0f9939dbf96113",
+      "layout": {
+        "solcVersion": "0.8.25",
+        "storage": [
+          {
+            "label": "nextSplitId",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256",
+            "contract": "ConfidentialPaymentSplitter",
+            "src": "contracts\\ConfidentialPaymentSplitter.sol:24"
+          },
+          {
+            "label": "splits",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_mapping(t_uint256,t_struct(Split)27388_storage)",
+            "contract": "ConfidentialPaymentSplitter",
+            "src": "contracts\\ConfidentialPaymentSplitter.sol:25"
+          },
+          {
+            "label": "userSplits",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
+            "contract": "ConfidentialPaymentSplitter",
+            "src": "contracts\\ConfidentialPaymentSplitter.sol:26"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ConfidentialPaymentSplitter",
+            "src": "contracts\\ConfidentialPaymentSplitter.sol:172"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_struct(InitializableStorage)6240_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(OwnableStorage)6029_storage": {
+            "label": "struct OwnableUpgradeable.OwnableStorage",
+            "members": [
+              {
+                "label": "_owner",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(address => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_userDefinedValueType(euint128)28)": {
+            "label": "mapping(address => euint128)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(Split)27388_storage)": {
+            "label": "mapping(uint256 => struct ConfidentialPaymentSplitter.Split)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Split)27388_storage": {
+            "label": "struct ConfidentialPaymentSplitter.Split",
+            "members": [
+              {
+                "label": "id",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "invoiceId",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "creator",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "payers",
+                "type": "t_array(t_address)dyn_storage",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "shares",
+                "type": "t_mapping(t_address,t_userDefinedValueType(euint128)28)",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "amountPaid",
+                "type": "t_mapping(t_address,t_userDefinedValueType(euint128)28)",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "hasPaid",
+                "type": "t_mapping(t_address,t_bool)",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "totalShares",
+                "type": "t_userDefinedValueType(euint128)28",
+                "offset": 0,
+                "slot": "7"
+              },
+              {
+                "label": "payerCount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "8"
+              },
+              {
+                "label": "paidCount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "9"
+              },
+              {
+                "label": "finalized",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "10"
+              }
+            ],
+            "numberOfBytes": "352"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_userDefinedValueType(euint128)28": {
+            "label": "euint128",
+            "numberOfBytes": "32",
+            "underlying": "t_uint256"
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.Ownable": [
+            {
+              "contract": "OwnableUpgradeable",
+              "label": "_owner",
+              "type": "t_address",
+              "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:24",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "@openzeppelin\\contracts\\proxy\\utils\\Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin\\contracts\\proxy\\utils\\Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    },
+    "9aa4df6519662267cf4ea876b5f2d617fcf196963cbab910fec86eab08a2c9f5": {
+      "address": "0x52AdB09E4F64c6bfBdD21E7d36D85698698Dc893",
+      "txHash": "0xa4d1f6595f29a785d924e921cbfe429c26b597fde10a36478bb710ce9869001d",
+      "layout": {
+        "solcVersion": "0.8.25",
+        "storage": [
+          {
+            "label": "nextInvoiceId",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256",
+            "contract": "ConfidentialInvoice",
+            "src": "contracts\\ConfidentialInvoice.sol:59"
+          },
+          {
+            "label": "invoices",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_mapping(t_uint256,t_struct(Invoice)25162_storage)",
+            "contract": "ConfidentialInvoice",
+            "src": "contracts\\ConfidentialInvoice.sol:60"
+          },
+          {
+            "label": "lineItems",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_struct(LineItem)25122_storage))",
+            "contract": "ConfidentialInvoice",
+            "src": "contracts\\ConfidentialInvoice.sol:61"
+          },
+          {
+            "label": "issuerInvoices",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
+            "contract": "ConfidentialInvoice",
+            "src": "contracts\\ConfidentialInvoice.sol:62"
+          },
+          {
+            "label": "buyerInvoices",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
+            "contract": "ConfidentialInvoice",
+            "src": "contracts\\ConfidentialInvoice.sol:63"
+          },
+          {
+            "label": "receiptContract",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_contract(IConfidentialReceipt)25072",
+            "contract": "ConfidentialInvoice",
+            "src": "contracts\\ConfidentialInvoice.sol:65"
+          },
+          {
+            "label": "analyticsContract",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_contract(IInvoiceAnalytics)25091",
+            "contract": "ConfidentialInvoice",
+            "src": "contracts\\ConfidentialInvoice.sol:66"
+          },
+          {
+            "label": "delegatedAccess",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "ConfidentialInvoice",
+            "src": "contracts\\ConfidentialInvoice.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ConfidentialInvoice",
+            "src": "contracts\\ConfidentialInvoice.sol:443"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_struct(InitializableStorage)6240_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(OwnableStorage)6029_storage": {
+            "label": "struct OwnableUpgradeable.OwnableStorage",
+            "members": [
+              {
+                "label": "_owner",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_bytes_storage": {
+            "label": "bytes",
+            "numberOfBytes": "32"
+          },
+          "t_contract(IConfidentialReceipt)25072": {
+            "label": "contract IConfidentialReceipt",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IInvoiceAnalytics)25091": {
+            "label": "contract IInvoiceAnalytics",
+            "numberOfBytes": "20"
+          },
+          "t_enum(Status)25105": {
+            "label": "enum ConfidentialInvoice.Status",
+            "members": [
+              "Created",
+              "Sent",
+              "PartiallyPaid",
+              "Paid",
+              "Overdue",
+              "Disputed",
+              "Cancelled"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(address => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(uint256 => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_struct(LineItem)25122_storage))": {
+            "label": "mapping(uint256 => mapping(uint256 => struct ConfidentialInvoice.LineItem))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(Invoice)25162_storage)": {
+            "label": "mapping(uint256 => struct ConfidentialInvoice.Invoice)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(LineItem)25122_storage)": {
+            "label": "mapping(uint256 => struct ConfidentialInvoice.LineItem)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Invoice)25162_storage": {
+            "label": "struct ConfidentialInvoice.Invoice",
+            "members": [
+              {
+                "label": "id",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "encryptedIssuer",
+                "type": "t_userDefinedValueType(eaddress)32",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "encryptedBuyer",
+                "type": "t_userDefinedValueType(eaddress)32",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "issuer",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "buyer",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "subtotal",
+                "type": "t_userDefinedValueType(euint128)28",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "amountPaid",
+                "type": "t_userDefinedValueType(euint128)28",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "orderIdHash",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "7"
+              },
+              {
+                "label": "memoHash",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "8"
+              },
+              {
+                "label": "encCurrency",
+                "type": "t_userDefinedValueType(euint8)20",
+                "offset": 0,
+                "slot": "9"
+              },
+              {
+                "label": "lineItemCount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "10"
+              },
+              {
+                "label": "dueDate",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "11"
+              },
+              {
+                "label": "status",
+                "type": "t_enum(Status)25105",
+                "offset": 0,
+                "slot": "12"
+              },
+              {
+                "label": "createdAt",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "13"
+              },
+              {
+                "label": "auditEnabled",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "14"
+              },
+              {
+                "label": "isPaidInFull",
+                "type": "t_userDefinedValueType(ebool)18",
+                "offset": 0,
+                "slot": "15"
+              }
+            ],
+            "numberOfBytes": "512"
+          },
+          "t_struct(LineItem)25122_storage": {
+            "label": "struct ConfidentialInvoice.LineItem",
+            "members": [
+              {
+                "label": "descriptionHash",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "quantity",
+                "type": "t_userDefinedValueType(euint32)24",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "unitPrice",
+                "type": "t_userDefinedValueType(euint128)28",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "amount",
+                "type": "t_userDefinedValueType(euint128)28",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "encDescription",
+                "type": "t_bytes_storage",
+                "offset": 0,
+                "slot": "4"
+              }
+            ],
+            "numberOfBytes": "160"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_userDefinedValueType(eaddress)32": {
+            "label": "eaddress",
+            "numberOfBytes": "32",
+            "underlying": "t_uint256"
+          },
+          "t_userDefinedValueType(ebool)18": {
+            "label": "ebool",
+            "numberOfBytes": "32",
+            "underlying": "t_uint256"
+          },
+          "t_userDefinedValueType(euint128)28": {
+            "label": "euint128",
+            "numberOfBytes": "32",
+            "underlying": "t_uint256"
+          },
+          "t_userDefinedValueType(euint32)24": {
+            "label": "euint32",
+            "numberOfBytes": "32",
+            "underlying": "t_uint256"
+          },
+          "t_userDefinedValueType(euint8)20": {
+            "label": "euint8",
+            "numberOfBytes": "32",
+            "underlying": "t_uint256"
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.Ownable": [
+            {
+              "contract": "OwnableUpgradeable",
+              "label": "_owner",
+              "type": "t_address",
+              "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:24",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "@openzeppelin\\contracts\\proxy\\utils\\Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin\\contracts\\proxy\\utils\\Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    },
+    "d3a5a6c8172115eceabce72e6fa5e2a8f647ecd80e272326fa73dc404ba957c2": {
+      "address": "0x848d4D177da19f1425EE6495061b7Ba1d177D843",
+      "txHash": "0xdd3792f9387e8223be6ea3c6e8f10e0f25faac2a74ffe10f7d66a829f6b291a5",
+      "layout": {
+        "solcVersion": "0.8.25",
+        "storage": [
+          {
+            "label": "nextInvoiceId",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256",
+            "contract": "ConfidentialInvoice",
+            "src": "contracts\\ConfidentialInvoice.sol:59"
+          },
+          {
+            "label": "invoices",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_mapping(t_uint256,t_struct(Invoice)25162_storage)",
+            "contract": "ConfidentialInvoice",
+            "src": "contracts\\ConfidentialInvoice.sol:60"
+          },
+          {
+            "label": "lineItems",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_struct(LineItem)25122_storage))",
+            "contract": "ConfidentialInvoice",
+            "src": "contracts\\ConfidentialInvoice.sol:61"
+          },
+          {
+            "label": "issuerInvoices",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
+            "contract": "ConfidentialInvoice",
+            "src": "contracts\\ConfidentialInvoice.sol:62"
+          },
+          {
+            "label": "buyerInvoices",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
+            "contract": "ConfidentialInvoice",
+            "src": "contracts\\ConfidentialInvoice.sol:63"
+          },
+          {
+            "label": "receiptContract",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_contract(IConfidentialReceipt)25072",
+            "contract": "ConfidentialInvoice",
+            "src": "contracts\\ConfidentialInvoice.sol:65"
+          },
+          {
+            "label": "analyticsContract",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_contract(IInvoiceAnalytics)25091",
+            "contract": "ConfidentialInvoice",
+            "src": "contracts\\ConfidentialInvoice.sol:66"
+          },
+          {
+            "label": "delegatedAccess",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "ConfidentialInvoice",
+            "src": "contracts\\ConfidentialInvoice.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ConfidentialInvoice",
+            "src": "contracts\\ConfidentialInvoice.sol:424"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_struct(InitializableStorage)6240_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(OwnableStorage)6029_storage": {
+            "label": "struct OwnableUpgradeable.OwnableStorage",
+            "members": [
+              {
+                "label": "_owner",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_bytes_storage": {
+            "label": "bytes",
+            "numberOfBytes": "32"
+          },
+          "t_contract(IConfidentialReceipt)25072": {
+            "label": "contract IConfidentialReceipt",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IInvoiceAnalytics)25091": {
+            "label": "contract IInvoiceAnalytics",
+            "numberOfBytes": "20"
+          },
+          "t_enum(Status)25105": {
+            "label": "enum ConfidentialInvoice.Status",
+            "members": [
+              "Created",
+              "Sent",
+              "PartiallyPaid",
+              "Paid",
+              "Overdue",
+              "Disputed",
+              "Cancelled"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(address => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(uint256 => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_struct(LineItem)25122_storage))": {
+            "label": "mapping(uint256 => mapping(uint256 => struct ConfidentialInvoice.LineItem))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(Invoice)25162_storage)": {
+            "label": "mapping(uint256 => struct ConfidentialInvoice.Invoice)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(LineItem)25122_storage)": {
+            "label": "mapping(uint256 => struct ConfidentialInvoice.LineItem)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Invoice)25162_storage": {
+            "label": "struct ConfidentialInvoice.Invoice",
+            "members": [
+              {
+                "label": "id",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "encryptedIssuer",
+                "type": "t_userDefinedValueType(eaddress)32",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "encryptedBuyer",
+                "type": "t_userDefinedValueType(eaddress)32",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "issuer",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "buyer",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "subtotal",
+                "type": "t_userDefinedValueType(euint128)28",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "amountPaid",
+                "type": "t_userDefinedValueType(euint128)28",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "orderIdHash",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "7"
+              },
+              {
+                "label": "memoHash",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "8"
+              },
+              {
+                "label": "encCurrency",
+                "type": "t_userDefinedValueType(euint8)20",
+                "offset": 0,
+                "slot": "9"
+              },
+              {
+                "label": "lineItemCount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "10"
+              },
+              {
+                "label": "dueDate",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "11"
+              },
+              {
+                "label": "status",
+                "type": "t_enum(Status)25105",
+                "offset": 0,
+                "slot": "12"
+              },
+              {
+                "label": "createdAt",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "13"
+              },
+              {
+                "label": "auditEnabled",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "14"
+              },
+              {
+                "label": "isPaidInFull",
+                "type": "t_userDefinedValueType(ebool)18",
+                "offset": 0,
+                "slot": "15"
+              }
+            ],
+            "numberOfBytes": "512"
+          },
+          "t_struct(LineItem)25122_storage": {
+            "label": "struct ConfidentialInvoice.LineItem",
+            "members": [
+              {
+                "label": "descriptionHash",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "quantity",
+                "type": "t_userDefinedValueType(euint32)24",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "unitPrice",
+                "type": "t_userDefinedValueType(euint128)28",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "amount",
+                "type": "t_userDefinedValueType(euint128)28",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "encDescription",
+                "type": "t_bytes_storage",
+                "offset": 0,
+                "slot": "4"
+              }
+            ],
+            "numberOfBytes": "160"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_userDefinedValueType(eaddress)32": {
+            "label": "eaddress",
+            "numberOfBytes": "32",
+            "underlying": "t_uint256"
+          },
+          "t_userDefinedValueType(ebool)18": {
+            "label": "ebool",
+            "numberOfBytes": "32",
+            "underlying": "t_uint256"
+          },
+          "t_userDefinedValueType(euint128)28": {
+            "label": "euint128",
+            "numberOfBytes": "32",
+            "underlying": "t_uint256"
+          },
+          "t_userDefinedValueType(euint32)24": {
+            "label": "euint32",
+            "numberOfBytes": "32",
+            "underlying": "t_uint256"
+          },
+          "t_userDefinedValueType(euint8)20": {
+            "label": "euint8",
+            "numberOfBytes": "32",
+            "underlying": "t_uint256"
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.Ownable": [
+            {
+              "contract": "OwnableUpgradeable",
+              "label": "_owner",
+              "type": "t_address",
+              "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:24",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "@openzeppelin\\contracts\\proxy\\utils\\Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin\\contracts\\proxy\\utils\\Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

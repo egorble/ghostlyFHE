@@ -1,0 +1,9 @@
+export const ADDRESSES = {
+  ConfidentialInvoice: '0xf19d5A1ab4F4DD9714800676fCB00CA48aEaD819',
+  ConfidentialReceipt: '0x206F3ac8Dd7DCd0681cf0D760AeBD6111D17c687',
+  InvoiceAnalytics: '0x6725331525a49051e0caf0927696896eD30e27b9',
+  ConfidentialPaymentSplitter: '0x57612c0347cFDe7f1a1dfF1c0995D888cA5A59B7',
+  USDC_SEPOLIA: '0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238',
+} as const;
+
+export const CONTRACT_ADDRESSES = ADDRESSES;
