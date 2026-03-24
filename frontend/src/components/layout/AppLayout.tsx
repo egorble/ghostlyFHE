@@ -9,10 +9,10 @@ export function AppLayout() {
     <div className="min-h-screen bg-slate-50 text-slate-900">
       <InvoiceAutoPoller />
       <Sidebar />
-      {/* Add left padding on large screens to account for fixed sidebar */}
-      <div className="lg:pl-56 flex flex-col min-h-screen transition-all duration-300">
+      {/* Add left padding on large screens for sidebar, and bottom padding for mobile nav */}
+      <div className="md:pl-20 lg:pl-56 pb-20 md:pb-0 flex flex-col min-h-screen transition-all duration-300">
         <Header />
-        <main className="flex-1 p-3 lg:p-6 w-full max-w-[1400px] mx-auto animate-in fade-in slide-in-from-bottom-4 duration-1000">
+        <main className="flex-1 px-3 pb-3 pt-1 lg:px-6 lg:pb-6 lg:pt-2 w-full max-w-[1400px] mx-auto animate-in fade-in slide-in-from-bottom-4 duration-1000">
           <Outlet />
         </main>
       </div>

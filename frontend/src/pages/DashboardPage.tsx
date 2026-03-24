@@ -367,11 +367,11 @@ export function DashboardPage() {
           )}
         </div>
 
-        <div className="lg:col-span-1 bg-white rounded-2xl border border-slate-100 p-4 shadow-sm">
-          <h2 className="text-[14px] font-bold text-slate-900 tracking-tight mb-2">Quick Actions</h2>
-          <div className="space-y-0.5">
+        <div className="lg:col-span-1 bg-white rounded-2xl border border-slate-100 p-4 shadow-sm flex flex-col">
+          <h2 className="text-[14px] font-bold text-slate-900 tracking-tight mb-3">Quick Actions</h2>
+          <div className="flex-1 flex flex-col gap-2">
             {quickActions.map((action) => (
-              <button key={action.label} onClick={() => navigate(action.path)} className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 transition-colors group cursor-pointer">
+              <button key={action.label} onClick={() => navigate(action.path)} className="w-full flex-1 flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 transition-colors group cursor-pointer">
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 bg-slate-50 border border-slate-100 rounded-lg flex items-center justify-center group-hover:bg-[#E5F2EC] transition-colors">
                     <action.icon className="w-4 h-4 text-slate-600 group-hover:text-[#115E3E] transition-colors" />

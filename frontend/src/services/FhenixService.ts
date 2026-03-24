@@ -415,19 +415,21 @@ export async function revokeAccess(
 export async function getDelegatedInvoiceIds(delegate: string): Promise<bigint[]> {
   const client = getPublicClient()
   const now = BigInt(Math.floor(Date.now() / 1000))
+  const currentBlock = await client.getBlockNumber()
+  const fromBlock = currentBlock > 9000n ? currentBlock - 9000n : 0n
 
   const granted = await client.getLogs({
     address: ADDRESSES.ConfidentialInvoice as Address,
     event: parseAbiItem('event AccessGranted(uint256 indexed invoiceId, address indexed delegate, uint256 expiry)'),
     args: { delegate: delegate as Address },
-    fromBlock: 0n,
+    fromBlock,
   })
 
   const revoked = await client.getLogs({
     address: ADDRESSES.ConfidentialInvoice as Address,
     event: parseAbiItem('event AccessRevoked(uint256 indexed invoiceId, address indexed delegate)'),
     args: { delegate: delegate as Address },
-    fromBlock: 0n,
+    fromBlock,
   })
 
   const revokedIds = new Set(revoked.map((l) => l.args.invoiceId!.toString()))
