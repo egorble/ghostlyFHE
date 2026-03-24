@@ -132,14 +132,10 @@ export function Sidebar() {
               </NavLink>
               )
             })}
-            <div className="flex items-center gap-4 px-4 py-2.5 pb-4 rounded-xl text-sm font-medium text-slate-500 hover:bg-slate-50/80 hover:text-red-600 transition-all cursor-pointer group">
-              <Lock className="w-5 h-5 group-hover:scale-110 transition-transform text-slate-400 group-hover:text-red-500" />
-              <span>Logout</span>
-            </div>
           </div>
         </div>
         <div className="px-4 py-4 pb-6 mx-auto w-full">
-           <div className="bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-[#0A3824] via-[#115E3E] to-[#1A7A50] rounded-[24px] p-4 text-white relative overflow-hidden group shadow-lg">
+           <div className="bg-[url('/bg-new.png')] bg-cover bg-center bg-no-repeat rounded-[24px] p-4 text-white relative overflow-hidden group shadow-lg border-[0.5px] border-emerald-900/20">
              <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-400/20 rounded-full blur-2xl group-hover:bg-emerald-400/30 transition-all"></div>
              
              <div className="w-8 h-8 rounded-full bg-white text-[#115E3E] flex items-center justify-center mb-2">
