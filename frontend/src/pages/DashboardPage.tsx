@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import { PiCards as FileText, PiArrowUpRight as ArrowUpRight, PiDownloadSimple as Inbox, PiClock as Clock, PiCaretRight as ArrowRight, PiPaperPlaneRight as Send, PiMagicWand as PlusCircle, PiWallet as ReceiptIcon, PiFingerprint as ShieldCheck } from 'react-icons/pi'
+import { PiArrowUpRight as ArrowUpRight, PiDownloadSimple as Inbox, PiClock as Clock, PiCaretRight as ArrowRight, PiPaperPlaneRight as Send, PiMagicWand as PlusCircle, PiFingerprint as ShieldCheck, PiCheckCircle as CheckCircle, PiTrendUp as TrendUp, PiTrendDown as TrendDown } from 'react-icons/pi'
 import { useUserStore } from '../stores/useUserStore'
 import * as InvoiceCache from '../services/InvoiceCacheService'
 import { EmptyState } from '../components/ui/empty-state'
@@ -106,8 +106,8 @@ const ActivityChart = ({ invoices }: { invoices: Invoice[] }) => {
   });
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-100 p-4 w-full h-[260px] flex flex-col relative z-10 shadow-sm">
-      <div className="flex justify-between items-center mb-3 z-20 relative">
+    <div className="bg-white rounded-[24px] border border-slate-100/60 p-5 lg:p-6 w-full h-[320px] flex flex-col relative z-10 shadow-sm">
+      <div className="flex justify-between items-center mb-6 z-20 relative">
         <h3 className="text-[15px] font-bold text-slate-900 tracking-tight">
           Invoice Analytics
         </h3>
@@ -242,148 +242,167 @@ export function DashboardPage() {
   const pendingCount = all.filter((i) => i.status <= 2).length
   const completedCount = all.filter((i) => i.status === 3).length
 
-  const quickActions = [
-    { label: 'Create Invoice', icon: PlusCircle, path: '/invoices/create' },
-    { label: 'View Invoices', icon: FileText, path: '/invoices' },
-    { label: 'Receipts', icon: ReceiptIcon, path: '/receipts' },
-    { label: 'Audit Center', icon: ShieldCheck, path: '/audit' },
-  ]
-
   return (
-    <div className="space-y-4 animate-in fade-in duration-700">
-
-      {/* Header section */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div>
-           <h1 className="text-2xl font-semibold tracking-tight text-slate-900">Dashboard</h1>
-           <p className="text-[12px] text-slate-500 mt-0.5">Create, send, and manage your confidential invoices with ease.</p>
+    <div className="space-y-6 animate-in fade-in duration-700 pb-8">
+      
+      {/* 1. Hero Welcome Banner */}
+      <div className="relative rounded-[32px] overflow-hidden bg-[#1F6E4D] bg-[url('/bg-hero.png')] bg-cover bg-center shadow-md border border-emerald-900/20">
+        {/* Glow effect */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-400/20 rounded-full blur-3xl pointer-events-none"></div>
+        
+        <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6 p-6 lg:p-10">
+          <div>
+            <h1 className="text-3xl lg:text-[40px] leading-tight font-extrabold tracking-tight text-white mb-2">Welcome back.</h1>
+            <p className="text-emerald-50/90 font-medium text-sm max-w-md leading-relaxed">
+              Your confidential invoice network is active and secure. You have <strong className="text-white">{pendingCount}</strong> pending invoices awaiting action.
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <button onClick={() => navigate('/invoices/create')} className="bg-white text-[#115E3E] px-5 py-3 rounded-2xl font-bold text-[13px] hover:bg-emerald-50 transition-all flex items-center justify-center gap-2 shadow-sm hover:scale-[1.02] active:scale-95">
+              <PlusCircle className="w-4 h-4" /> Create Invoice
+            </button>
+            <button onClick={() => navigate('/audit')} className="bg-emerald-900/40 backdrop-blur-md text-white border border-emerald-400/20 px-5 py-3 rounded-2xl font-bold text-[13px] hover:bg-emerald-900/60 transition-all flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95">
+              <ShieldCheck className="w-4 h-4" /> Audit Center
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Stats Cards Row */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Card 1: Main Dark Green Card */}
-        <div className="rounded-2xl bg-[#1F6E4D] p-4 shadow-sm relative overflow-hidden group cursor-pointer" onClick={() => navigate('/invoices')}>
-          <div className="flex items-center justify-between mb-2 relative z-10">
-             <span className="text-[11px] font-medium text-white/90">Total Published</span>
-             <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center">
-                <ArrowUpRight className="w-3 h-3 text-[#1F6E4D]" />
-             </div>
-          </div>
-          <h2 className="text-[32px] leading-none font-medium text-white mb-3 relative z-10 tracking-tight">
-             {loading ? '...' : sentInvoices.length}
-          </h2>
-          <div className="flex items-center gap-1.5 text-[10px] font-medium text-emerald-100/80 relative z-10">
-             <span>↑</span> Increased from last month
-          </div>
-        </div>
-
-        {/* Cards 2, 3, 4: White Cards */}
+      {/* 2. Bento Stats Grid (3 Col) */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {[
-          { label: 'Completed Invoices', value: completedCount, trend: 'Increased from last month', up: true },
-          { label: 'Pending Invoices', value: pendingCount, trend: 'Decreased from last month', up: false },
-          { label: 'Received Invoices', value: receivedInvoices.length, tail: 'Awaiting Action' },
+          { label: 'Completed Invoices', value: completedCount, trend: 'Increased', up: true, icon: CheckCircle, color: 'text-emerald-500', bg: 'bg-emerald-50' },
+          { label: 'Pending Invoices', value: pendingCount, trend: 'Decreased', up: false, icon: Clock, color: 'text-amber-500', bg: 'bg-amber-50' },
+          { label: 'Received Invoices', value: receivedInvoices.length, tail: 'Awaiting Action', icon: Inbox, color: 'text-blue-500', bg: 'bg-blue-50' },
         ].map((card) => (
-          <div key={card.label} className="rounded-2xl bg-white p-4 shadow-sm border border-slate-100 relative group cursor-pointer hover:shadow-md transition-shadow" onClick={() => navigate('/invoices')}>
-            <div className="flex items-center justify-between mb-2">
-               <span className="text-[11px] font-medium text-slate-700">{card.label}</span>
-               <div className="w-6 h-6 rounded-full border border-slate-200 flex items-center justify-center">
-                  <ArrowUpRight className="w-3 h-3 text-slate-500" />
+          <div key={card.label} className="rounded-[24px] bg-white p-5 lg:p-6 shadow-sm border border-slate-100/60 relative group cursor-pointer hover:shadow-md transition-shadow" onClick={() => navigate('/invoices')}>
+            <div className="flex items-center justify-between mb-4">
+               <div className="flex items-center gap-3">
+                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${card.bg}`}>
+                   <card.icon className={`w-5 h-5 ${card.color}`} />
+                 </div>
+                 <span className="text-[14px] font-bold text-slate-700">{card.label}</span>
                </div>
+               <ArrowUpRight className="w-4 h-4 text-slate-300 group-hover:text-slate-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
             </div>
-            <h2 className="text-[32px] leading-none font-medium text-slate-900 mb-3 tracking-tight">
+            <h2 className="text-[40px] leading-none font-bold text-slate-900 mb-4 tracking-tight">
                {loading ? '...' : card.value}
             </h2>
             {card.trend && (
-              <div className="flex items-center gap-1.5 text-[10px] font-medium text-slate-400">
-                 <span>{card.up ? '↑' : '↓'}</span> {card.trend}
+              <div className="flex items-center gap-1.5 text-[12px] font-semibold text-slate-500">
+                 {card.up ? <TrendUp className="w-4 h-4 text-emerald-500" /> : <TrendDown className="w-4 h-4 text-amber-500" />}
+                 {card.trend} from last month
               </div>
             )}
             {card.tail && (
-              <div className="text-[10px] font-medium text-slate-500">{card.tail}</div>
+              <div className="flex items-center gap-1.5 text-[12px] font-semibold text-slate-500">
+                 <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+                 {card.tail}
+              </div>
             )}
           </div>
         ))}
       </div>
 
-      {/* Row 2: Analytics Chart + Project Progress (same height) */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <div className="lg:col-span-2">
+      {/* 3. Lower Section: Activity & Invoices vs progress & security */}
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+        {/* Left Col (Charts + List) */}
+        <div className="xl:col-span-2 space-y-6">
           <ActivityChart invoices={all} />
-        </div>
-        <div className="lg:col-span-1">
-          <InvoiceProgressGauge invoices={all} className="h-[260px]" />
-        </div>
-      </div>
-
-      {/* Row 3: Active Invoices + Quick Actions */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <div className="lg:col-span-2 bg-white rounded-2xl border border-slate-100 p-4 shadow-sm">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-[15px] font-bold text-slate-900 tracking-tight">Active Invoices</h2>
-            <button onClick={() => navigate('/invoices')} className="text-[13px] font-bold text-slate-500 hover:text-slate-900 transition-colors">View all</button>
-          </div>
-
-          {all.length === 0 ? (
-            <div className="py-4 text-center">
-              <EmptyState icon={Send} title="No activity yet" description="Your confidential invoices will appear here." />
-            </div>
-          ) : (
-            <div className="space-y-1">
-              {all.slice(0, 4).map((inv) => (
-                <div key={inv.id.toString()} className="p-3 flex items-center justify-between cursor-pointer rounded-2xl hover:bg-slate-50 transition-colors group" onClick={() => navigate(`/invoices/${inv.id.toString()}`)}>
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center">
-                      {inv.issuer.toLowerCase() === address?.toLowerCase() ? (
-                        <div className="w-full h-full rounded-full bg-[#1F6E4D]/10 flex items-center justify-center">
-                          <Send className="w-4 h-4 text-[#1F6E4D]" />
-                        </div>
-                      ) : (
-                        <div className="w-full h-full rounded-full bg-blue-50 flex items-center justify-center">
-                          <Inbox className="w-4 h-4 text-blue-600" />
-                        </div>
-                      )}
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-bold text-slate-900">Invoice #{inv.id.toString()}</h4>
-                      <p className="text-[11px] font-medium text-slate-500 mt-0.5">
-                        {inv.issuer.toLowerCase() === address?.toLowerCase()
-                          ? `To: ${inv.buyer.slice(0, 6)}...${inv.buyer.slice(-4)}`
-                          : `From: ${inv.issuer.slice(0, 6)}...${inv.issuer.slice(-4)}`}
-                        <span className="mx-2">•</span>
-                        Due {inv.dueDate ? new Date(Number(inv.dueDate) * 1000).toLocaleDateString() : 'N/A'}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className={`w-2 h-2 rounded-full ${
-                      inv.status === 3 ? 'bg-emerald-500' : inv.status === 4 ? 'bg-slate-300' : 'bg-amber-400'
-                    }`} />
-                    <span className="text-[11px] font-semibold text-slate-600">{STATUS_LABELS[inv.status]}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        <div className="lg:col-span-1 bg-white rounded-2xl border border-slate-100 p-4 shadow-sm flex flex-col">
-          <h2 className="text-[14px] font-bold text-slate-900 tracking-tight mb-3">Quick Actions</h2>
-          <div className="flex-1 flex flex-col gap-2">
-            {quickActions.map((action) => (
-              <button key={action.label} onClick={() => navigate(action.path)} className="w-full flex-1 flex items-center justify-between px-3 py-2 rounded-xl hover:bg-slate-50 transition-colors group cursor-pointer">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 bg-slate-50 border border-slate-100 rounded-lg flex items-center justify-center group-hover:bg-[#E5F2EC] transition-colors">
-                    <action.icon className="w-4 h-4 text-slate-600 group-hover:text-[#115E3E] transition-colors" />
-                  </div>
-                  <span className="text-[13px] font-bold text-slate-700 group-hover:text-slate-900 transition-colors">{action.label}</span>
-                </div>
-                <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-900 transition-all group-hover:translate-x-1" />
+          
+          <div className="bg-white rounded-[24px] border border-slate-100/60 p-5 lg:p-6 shadow-sm">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-[16px] font-bold text-slate-900 tracking-tight">Active Invoices</h2>
+              <button onClick={() => navigate('/invoices')} className="text-[13px] font-bold text-slate-500 hover:text-slate-900 transition-colors flex items-center gap-1">
+                View all <ArrowRight className="w-3.5 h-3.5" />
               </button>
-            ))}
+            </div>
+
+            {all.length === 0 ? (
+              <div className="py-8 text-center bg-slate-50/50 rounded-2xl">
+                <EmptyState icon={Send} title="No activity yet" description="Your confidential invoices will appear here." />
+              </div>
+            ) : (
+              <div className="space-y-2">
+                {all.slice(0, 4).map((inv) => (
+                  <div key={inv.id.toString()} className="relative p-4 flex items-center justify-between cursor-pointer rounded-2xl border border-transparent hover:border-slate-100 hover:bg-slate-50/80 transition-all group overflow-hidden" onClick={() => navigate(`/invoices/${inv.id.toString()}`)}>
+                    <div className="flex items-center gap-4 relative z-10">
+                      <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0">
+                        {inv.issuer.toLowerCase() === address?.toLowerCase() ? (
+                          <div className="w-full h-full rounded-full bg-[#1F6E4D]/10 flex items-center justify-center">
+                            <Send className="w-4 h-4 text-[#1F6E4D]" />
+                          </div>
+                        ) : (
+                          <div className="w-full h-full rounded-full bg-blue-50 flex items-center justify-center">
+                            <Inbox className="w-4 h-4 text-blue-600" />
+                          </div>
+                        )}
+                      </div>
+                      <div>
+                        <h4 className="text-[14px] font-bold text-slate-900 group-hover:text-[#115E3E] transition-colors">Invoice #{inv.id.toString()}</h4>
+                        <p className="text-[12px] font-medium text-slate-500 mt-0.5 flex items-center gap-1.5">
+                          {inv.issuer.toLowerCase() === address?.toLowerCase()
+                            ? <><span>To:</span> <span className="text-slate-700">{inv.buyer.slice(0, 6)}...{inv.buyer.slice(-4)}</span></>
+                            : <><span>From:</span> <span className="text-slate-700">{inv.issuer.slice(0, 6)}...{inv.issuer.slice(-4)}</span></>}
+                          <span className="text-slate-300">•</span>
+                          <span>Due {inv.dueDate ? new Date(Number(inv.dueDate) * 1000).toLocaleDateString() : 'N/A'}</span>
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4 relative z-10">
+                      <div className={`px-2.5 py-1 rounded-md flex items-center gap-1.5 ${
+                        inv.status === 3 ? 'bg-emerald-50 text-emerald-700' : inv.status === 4 ? 'bg-slate-100 text-slate-700' : 'bg-amber-50 text-amber-700'
+                      }`}>
+                         <div className={`w-1.5 h-1.5 rounded-full ${
+                          inv.status === 3 ? 'bg-emerald-500' : inv.status === 4 ? 'bg-slate-400' : 'bg-amber-500'
+                        }`} />
+                         <span className="text-[11px] font-bold">{STATUS_LABELS[inv.status]}</span>
+                      </div>
+                      <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-[#115E3E] group-hover:translate-x-1 transition-all" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Right Col */}
+        <div className="space-y-6">
+          <InvoiceProgressGauge invoices={all} className="h-[320px] rounded-[24px] border-slate-100/60 shadow-sm" />
+          
+          {/* FHE Security Widget */}
+          <div className="bg-slate-900 rounded-[24px] p-6 shadow-md border border-slate-800 text-white relative overflow-hidden">
+             {/* decorative glowing edge */}
+             <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent"></div>
+             
+             <div className="flex items-center justify-between mb-5">
+                <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center border border-emerald-500/30">
+                  <ShieldCheck className="w-5 h-5 text-emerald-400" />
+                </div>
+                <div className="flex items-center gap-2 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
+                   <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></div>
+                   <span className="text-[10px] font-bold text-emerald-300 uppercase tracking-wider">Secured</span>
+                </div>
+             </div>
+             
+             <h3 className="text-[16px] font-bold text-white mb-2">End-to-End Encryption</h3>
+             <p className="text-[12px] text-slate-400 font-medium leading-relaxed mb-6">
+               All invoice amounts and sensitive financial metadata are fully encrypted on-chain using Fhenix FHE. Only explicitly authorized parties can decrypt the data.
+             </p>
+             
+             <div className="bg-slate-800/50 rounded-xl p-3 border border-slate-700/50 flex items-center justify-between">
+                <div className="flex flex-col">
+                   <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-0.5">Network Layer</span>
+                   <span className="text-[12px] text-slate-200 font-bold">Fhenix L2</span>
+                </div>
+                <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center border border-slate-700">
+                   <ShieldCheck className="w-4 h-4 text-slate-400" />
+                </div>
+             </div>
           </div>
         </div>
       </div>
     </div>
-   )
+  )
 }

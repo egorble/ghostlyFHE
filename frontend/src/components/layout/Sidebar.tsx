@@ -65,10 +65,7 @@ export function Sidebar() {
                   <motion.div
                     layoutId="sidebar-active-indicator"
                     className="absolute -left-3 lg:-left-4 inset-y-0 my-auto w-1.5 h-10 bg-[#115E3E] rounded-r-md pointer-events-none hidden md:block"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    transition={{ type: "spring", bounce: 0, duration: 0.4 }}
                   />
                 )}
                 <item.icon className={cn("w-5 h-5 shrink-0 transition-transform group-hover:scale-110 relative z-10", isActive ? 'text-[#115E3E]' : 'text-slate-400 group-hover:text-slate-600')} />
@@ -115,10 +112,7 @@ export function Sidebar() {
                 <motion.div
                   layoutId="mobile-active-indicator"
                   className="absolute inset-0 bg-[#115E3E]/10 rounded-xl pointer-events-none"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  transition={{ type: "spring", bounce: 0, duration: 0.4 }}
                 />
               )}
               <item.icon className={cn("w-6 h-6 relative z-10", isActive ? 'scale-110' : '')} strokeWidth={isActive ? 2 : 1.5} />
