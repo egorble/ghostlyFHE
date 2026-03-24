@@ -1,6 +1,26 @@
-import { motion } from 'framer-motion'
-import { PiArrowUpRight as ArrowUpRight, PiDownloadSimple as Inbox, PiClock as Clock, PiCaretRight as ArrowRight, PiPaperPlaneRight as Send, PiFingerprint as ShieldCheck, PiCheckCircle as CheckCircle, PiTrendUp as TrendUp, PiMagicWand as PlusCircle, PiTrendDown as TrendDown } from 'react-icons/pi'
+import { useEffect, useState, useRef } from 'react'
+import { motion, animate, useInView } from 'framer-motion'
+import { PiArrowUpRight as ArrowUpRight, PiDownloadSimple as Inbox, PiClock as Clock, PiCaretRight as ArrowRight, PiPaperPlaneRight as Send, PiFingerprint as ShieldCheck, PiCheckCircle as CheckCircle, PiTrendUp as TrendUp, PiTrendDown as TrendDown } from 'react-icons/pi'
 import InvoiceProgressGauge from './InvoiceProgressGauge'
+
+function AnimatedNumber({ value, prefix = "", suffix = "" }: { value: number, prefix?: string, suffix?: string }) {
+  const [displayValue, setDisplayValue] = useState(0)
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: "-50px" })
+
+  useEffect(() => {
+    if (isInView) {
+      const controls = animate(0, value, {
+        duration: 2,
+        ease: "easeOut",
+        onUpdate: (v) => setDisplayValue(Math.round(v))
+      })
+      return () => controls.stop()
+    }
+  }, [value, isInView])
+
+  return <span ref={ref}>{prefix}{displayValue.toLocaleString()}{suffix}</span>
+}
 
 const DummyActivityChart = () => {
   const data = [
@@ -19,7 +39,7 @@ const DummyActivityChart = () => {
     <div className="bg-white rounded-[24px] border border-slate-100/60 p-5 lg:p-6 w-full h-[320px] flex flex-col relative z-10 shadow-sm">
       <div className="flex justify-between items-center mb-6 z-20 relative">
         <h3 className="text-[15px] font-bold text-slate-900 tracking-tight">Invoice Analytics</h3>
-        <button className="text-[10px] sm:text-xs bg-white text-slate-700 font-bold px-3 py-1.5 rounded-full border border-slate-200 flex items-center gap-2">
+        <button className="text-[10px] sm:text-xs bg-white text-slate-700 font-bold px-3 py-1.5 rounded-full border border-slate-200 flex items-center gap-2 transition-transform hover:scale-105">
           Week <span>▼</span>
         </button>
       </div>
@@ -43,14 +63,15 @@ const DummyActivityChart = () => {
                 <div key={i} className="flex flex-col items-center justify-end h-full w-full relative group/bar">
                   <div className="relative flex justify-center items-end w-full h-full">
                     <motion.div
-                      className={`w-[24px] sm:w-[32px] lg:w-[36px] rounded-full cursor-pointer relative ${barColor}`}
+                      className={`w-[24px] sm:w-[32px] lg:w-[36px] rounded-full cursor-pointer relative ${barColor} shadow-sm`}
                       style={{ minHeight: '32px' }}
-                      initial={{ height: "10px" }}
-                      animate={{ height: `${d.value}%` }}
-                      transition={{ duration: 0.6, delay: i * 0.05, ease: "easeOut" }}
+                      initial={{ height: "10px", opacity: 0 }}
+                      whileInView={{ height: `${d.value}%`, opacity: 1 }}
+                      viewport={{ once: true, margin: "-50px" }}
+                      transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                     >
                       {d.isCurrent && (
-                        <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-white border-2 border-[#56C288] z-20"></div>
+                        <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-white border-2 border-[#56C288] z-20 shadow-sm animate-pulse"></div>
                       )}
                     </motion.div>
                   </div>
@@ -63,7 +84,7 @@ const DummyActivityChart = () => {
         <div className="flex items-center justify-between w-full ml-2 sm:ml-4 pr-2 mt-4">
           {data.map((d, i) => (
             <div key={i} className="flex justify-center w-full text-center">
-              <span className="text-[10px] font-medium text-slate-300 uppercase">{d.label.charAt(0)}</span>
+              <span className="text-[10px] font-medium text-slate-300 uppercase tracking-wide">{d.label.charAt(0)}</span>
             </div>
           ))}
         </div>
@@ -87,27 +108,6 @@ export function MockDashboard() {
 
   return (
     <div className="space-y-6 animate-in fade-in duration-700 w-full max-w-6xl mx-auto pointer-events-none select-none">
-      {/* 1. Hero Welcome Banner */}
-      <div className="relative rounded-[32px] overflow-hidden bg-[#1F6E4D] bg-[url('/bg-hero.png')] bg-cover bg-center shadow-md border border-emerald-900/20">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-400/20 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6 p-6 lg:p-10">
-          <div>
-            <h1 className="text-3xl lg:text-[40px] leading-tight font-extrabold tracking-tight text-white mb-2">Welcome back.</h1>
-            <p className="text-emerald-50/90 font-medium text-sm max-w-md leading-relaxed">
-              Your confidential invoice network is active and secure. You have <strong className="text-white">{pendingCount}</strong> pending invoices awaiting action.
-            </p>
-          </div>
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-            <button className="bg-white text-[#115E3E] px-5 py-3 rounded-2xl font-bold text-[13px] flex items-center justify-center gap-2 shadow-sm">
-              <PlusCircle className="w-4 h-4" /> Create Invoice
-            </button>
-            <button className="bg-emerald-900/40 backdrop-blur-md text-white border border-emerald-400/20 px-5 py-3 rounded-2xl font-bold text-[13px] flex items-center justify-center gap-2">
-              <ShieldCheck className="w-4 h-4" /> Audit Center
-            </button>
-          </div>
-        </div>
-      </div>
-
       {/* 2. Bento Stats Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {[
@@ -115,7 +115,10 @@ export function MockDashboard() {
           { label: 'Pending Invoices', value: pendingCount, trend: 'Decreased', up: false, icon: Clock, color: 'text-amber-500', bg: 'bg-amber-50' },
           { label: 'Received Invoices', value: receivedCount, tail: 'Awaiting Action', icon: Inbox, color: 'text-blue-500', bg: 'bg-blue-50' },
         ].map((card) => (
-          <div key={card.label} className="rounded-[24px] bg-white p-5 lg:p-6 shadow-sm border border-slate-100/60 relative">
+          <div 
+            key={card.label} 
+            className="rounded-[24px] bg-white p-5 lg:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.02)] border border-slate-100/60 relative"
+          >
             <div className="flex items-center justify-between mb-4">
                <div className="flex items-center gap-3">
                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${card.bg}`}>
@@ -126,7 +129,7 @@ export function MockDashboard() {
                <ArrowUpRight className="w-4 h-4 text-slate-300" />
             </div>
             <h2 className="text-[40px] leading-none font-bold text-slate-900 mb-4 tracking-tight">
-               {card.value}
+               <AnimatedNumber value={card.value} />
             </h2>
             {card.trend && (
                <div className="flex items-center gap-1.5 text-[12px] font-semibold text-slate-500">
@@ -149,17 +152,17 @@ export function MockDashboard() {
         <div className="xl:col-span-2 space-y-6">
           <DummyActivityChart />
           
-          <div className="bg-white rounded-[24px] border border-slate-100/60 p-5 lg:p-6 shadow-sm">
+          <div className="bg-white rounded-[24px] border border-slate-100/60 p-5 lg:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.02)]">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-[16px] font-bold text-slate-900 tracking-tight">Active Invoices</h2>
-              <button className="text-[13px] font-bold text-slate-500 flex items-center gap-1">
+              <button className="text-[13px] font-bold text-slate-500 flex items-center gap-1 hover:text-slate-800 transition-colors">
                 View all <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
 
             <div className="space-y-2">
               {dummyInvoices.map((inv) => (
-                <div key={inv.id} className="relative p-4 flex items-center justify-between rounded-2xl border border-transparent">
+                <div key={inv.id} className="relative p-4 flex items-center justify-between rounded-2xl border border-transparent hover:bg-slate-50 transition-colors">
                   <div className="flex items-center gap-4 relative z-10">
                     <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0">
                       {inv.type === 'sent' ? (
@@ -205,7 +208,9 @@ export function MockDashboard() {
         </div>
 
         <div className="space-y-6">
-          <InvoiceProgressGauge invoices={fakeGaugeInvoices} className="h-[320px] rounded-[24px] border-slate-100/60 shadow-sm" />
+          <div>
+             <InvoiceProgressGauge invoices={fakeGaugeInvoices} className="h-[320px] rounded-[24px] border border-slate-100/60 shadow-[0_8px_30px_rgba(0,0,0,0.02)]" />
+          </div>
           
           <div className="bg-slate-900 rounded-[24px] p-6 shadow-md border border-slate-800 text-white relative overflow-hidden">
              <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent"></div>

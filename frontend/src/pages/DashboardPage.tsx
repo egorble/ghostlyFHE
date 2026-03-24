@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import { PiArrowUpRight as ArrowUpRight, PiDownloadSimple as Inbox, PiClock as Clock, PiCaretRight as ArrowRight, PiPaperPlaneRight as Send, PiMagicWand as PlusCircle, PiFingerprint as ShieldCheck, PiCheckCircle as CheckCircle, PiTrendUp as TrendUp, PiTrendDown as TrendDown } from 'react-icons/pi'
+import { PiArrowUpRight as ArrowUpRight, PiDownloadSimple as Inbox, PiClock as Clock, PiCaretRight as ArrowRight, PiPaperPlaneRight as Send, PiFingerprint as ShieldCheck, PiCheckCircle as CheckCircle, PiTrendUp as TrendUp, PiTrendDown as TrendDown } from 'react-icons/pi'
 import { useUserStore } from '../stores/useUserStore'
 import * as InvoiceCache from '../services/InvoiceCacheService'
 import { EmptyState } from '../components/ui/empty-state'
@@ -245,29 +245,6 @@ export function DashboardPage() {
   return (
     <div className="space-y-6 animate-in fade-in duration-700 pb-8">
       
-      {/* 1. Hero Welcome Banner */}
-      <div className="relative rounded-[32px] overflow-hidden bg-[#1F6E4D] bg-[url('/bg-hero.png')] bg-cover bg-center shadow-md border border-emerald-900/20">
-        {/* Glow effect */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-400/20 rounded-full blur-3xl pointer-events-none"></div>
-        
-        <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6 p-6 lg:p-10">
-          <div>
-            <h1 className="text-3xl lg:text-[40px] leading-tight font-extrabold tracking-tight text-white mb-2">Welcome back.</h1>
-            <p className="text-emerald-50/90 font-medium text-sm max-w-md leading-relaxed">
-              Your confidential invoice network is active and secure. You have <strong className="text-white">{pendingCount}</strong> pending invoices awaiting action.
-            </p>
-          </div>
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-            <button onClick={() => navigate('/invoices/create')} className="bg-white text-[#115E3E] px-5 py-3 rounded-2xl font-bold text-[13px] hover:bg-emerald-50 transition-all flex items-center justify-center gap-2 shadow-sm hover:scale-[1.02] active:scale-95">
-              <PlusCircle className="w-4 h-4" /> Create Invoice
-            </button>
-            <button onClick={() => navigate('/audit')} className="bg-emerald-900/40 backdrop-blur-md text-white border border-emerald-400/20 px-5 py-3 rounded-2xl font-bold text-[13px] hover:bg-emerald-900/60 transition-all flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95">
-              <ShieldCheck className="w-4 h-4" /> Audit Center
-            </button>
-          </div>
-        </div>
-      </div>
-
       {/* 2. Bento Stats Grid (3 Col) */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {[

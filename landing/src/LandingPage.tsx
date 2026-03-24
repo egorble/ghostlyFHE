@@ -6,24 +6,24 @@ export function LandingPage() {
   const { scrollY } = useScroll()
 
   // Icon 1: Shield (Top Left)
-  const icon1Y = useTransform(scrollY, [0, 400], [0, 350])
-  const icon1X = useTransform(scrollY, [0, 400], [0, 250])
-  const icon1Rotate = useTransform(scrollY, [0, 400], [-10, 30])
+  const icon1Y = useTransform(scrollY, [0, 600], [0, 800])
+  const icon1X = useTransform(scrollY, [0, 600], [0, 350])
+  const icon1Rotate = useTransform(scrollY, [0, 600], [-10, 45])
 
   // Icon 2: Lock (Middle Left)
-  const icon2Y = useTransform(scrollY, [0, 400], [0, 200])
-  const icon2X = useTransform(scrollY, [0, 400], [0, 350])
-  const icon2Rotate = useTransform(scrollY, [0, 400], [15, -20])
+  const icon2Y = useTransform(scrollY, [0, 600], [0, 600])
+  const icon2X = useTransform(scrollY, [0, 600], [0, 450])
+  const icon2Rotate = useTransform(scrollY, [0, 600], [15, -45])
 
   // Icon 3: Fingerprint (Top Right)
-  const icon3Y = useTransform(scrollY, [0, 400], [0, 350])
-  const icon3X = useTransform(scrollY, [0, 400], [0, -250])
-  const icon3Rotate = useTransform(scrollY, [0, 400], [10, -35])
+  const icon3Y = useTransform(scrollY, [0, 600], [0, 800])
+  const icon3X = useTransform(scrollY, [0, 600], [0, -350])
+  const icon3Rotate = useTransform(scrollY, [0, 600], [10, -60])
 
   // Icon 4: File (Middle Right)
-  const icon4Y = useTransform(scrollY, [0, 400], [0, 150])
-  const icon4X = useTransform(scrollY, [0, 400], [0, -350])
-  const icon4Rotate = useTransform(scrollY, [0, 400], [-15, 25])
+  const icon4Y = useTransform(scrollY, [0, 600], [0, 600])
+  const icon4X = useTransform(scrollY, [0, 600], [0, -450])
+  const icon4Rotate = useTransform(scrollY, [0, 600], [-15, 45])
 
   return (
     <div className="min-h-screen bg-[#FDFDFE] selection:bg-[#56C288]/20 selection:text-[#115E3E] overflow-hidden font-sans relative">

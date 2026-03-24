@@ -45,7 +45,8 @@ export default function InvoiceProgressGauge({ invoices, className = '' }: Props
                   cx="50" cy="50" r={r} transform="rotate(180 50 50)" fill="none" stroke="white" strokeWidth={strokeW} strokeLinecap="round"
                   strokeDasharray={`${circ} ${circ}`}
                   initial={{ strokeDashoffset: circ }}
-                  animate={{ strokeDashoffset: circ - (lenCompleted + lenInProgress + lenPending) }}
+                  whileInView={{ strokeDashoffset: circ - (lenCompleted + lenInProgress + lenPending) }}
+                  viewport={{ once: true, margin: "-50px" }}
                   transition={{ type: "spring", bounce: 0.15, duration: 1.8 }}
                 />
               </mask>
@@ -56,7 +57,8 @@ export default function InvoiceProgressGauge({ invoices, className = '' }: Props
                 cx="50" cy="50" r={r} transform="rotate(180 50 50)" fill="none" stroke="#f1f5f9" strokeWidth={strokeW} strokeLinecap="round" 
                 strokeDasharray={`${circ} ${circ}`}
                 initial={{ strokeDashoffset: circ }}
-                animate={{ strokeDashoffset: circ - halfCirc }}
+                whileInView={{ strokeDashoffset: circ - halfCirc }}
+                viewport={{ once: true, margin: "-50px" }}
                 transition={{ type: "spring", bounce: 0.15, duration: 1.8 }}
               />
             ) : (
@@ -91,7 +93,8 @@ export default function InvoiceProgressGauge({ invoices, className = '' }: Props
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 flex flex-col items-center text-center">
             <motion.span 
               initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: 0.8 }}
               className="text-[32px] font-bold text-slate-900 leading-none tracking-tight"
             >
@@ -99,7 +102,8 @@ export default function InvoiceProgressGauge({ invoices, className = '' }: Props
             </motion.span>
             <motion.span 
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: 1 }}
               className="text-[9px] font-medium text-slate-500 mt-0.5 uppercase tracking-wider"
             >
