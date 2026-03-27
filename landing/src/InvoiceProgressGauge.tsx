@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion'
+import { motion, useInView } from 'framer-motion'
+import { useRef } from 'react'
 
 interface Invoice {
   status: number
@@ -12,7 +13,7 @@ interface Props {
 export default function InvoiceProgressGauge({ invoices, className = '' }: Props) {
   const completed = invoices.filter(i => i.status === 3).length
   const inProgress = invoices.filter(i => [1, 2, 4, 5].includes(i.status)).length
-  const pending = invoices.filter(i => i.status === 0 || i.status === 2).length
+  const pending = invoices.filter(i => i.status === 0).length
   const total = completed + inProgress + pending
 
   const pct = total === 0 ? 0 : Math.round((completed / total) * 100)
@@ -26,8 +27,11 @@ export default function InvoiceProgressGauge({ invoices, className = '' }: Props
   const lenInProgress = total === 0 ? 0 : (inProgress / total) * halfCirc
   const lenPending = total === 0 ? 0 : (pending / total) * halfCirc
 
+  const containerRef = useRef(null)
+  const isInView = useInView(containerRef, { once: true, margin: "-50px" })
+
   return (
-    <div className={`bg-white rounded-2xl border border-slate-100 p-4 flex flex-col items-center shadow-sm relative ${className}`}>
+    <div ref={containerRef} className={`bg-white rounded-2xl border border-slate-100 p-4 flex flex-col items-center shadow-sm relative ${className}`}>
       <div className="w-full flex justify-start">
         <h3 className="text-[14px] font-bold text-slate-900 tracking-tight">Project Progress</h3>
       </div>
@@ -45,9 +49,8 @@ export default function InvoiceProgressGauge({ invoices, className = '' }: Props
                   cx="50" cy="50" r={r} transform="rotate(180 50 50)" fill="none" stroke="white" strokeWidth={strokeW} strokeLinecap="round"
                   strokeDasharray={`${circ} ${circ}`}
                   initial={{ strokeDashoffset: circ }}
-                  whileInView={{ strokeDashoffset: circ - (lenCompleted + lenInProgress + lenPending) }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ type: "spring", bounce: 0.15, duration: 1.8 }}
+                  animate={isInView ? { strokeDashoffset: circ - (lenCompleted + lenInProgress + lenPending) } : { strokeDashoffset: circ }}
+                  transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
                 />
               </mask>
             </defs>
@@ -57,9 +60,8 @@ export default function InvoiceProgressGauge({ invoices, className = '' }: Props
                 cx="50" cy="50" r={r} transform="rotate(180 50 50)" fill="none" stroke="#f1f5f9" strokeWidth={strokeW} strokeLinecap="round" 
                 strokeDasharray={`${circ} ${circ}`}
                 initial={{ strokeDashoffset: circ }}
-                whileInView={{ strokeDashoffset: circ - halfCirc }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ type: "spring", bounce: 0.15, duration: 1.8 }}
+                animate={isInView ? { strokeDashoffset: circ - halfCirc } : { strokeDashoffset: circ }}
+                transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
               />
             ) : (
               <g mask="url(#gaugeMask)">
@@ -93,8 +95,7 @@ export default function InvoiceProgressGauge({ invoices, className = '' }: Props
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 flex flex-col items-center text-center">
             <motion.span 
               initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-50px" }}
+              animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
               transition={{ duration: 0.5, delay: 0.8 }}
               className="text-[32px] font-bold text-slate-900 leading-none tracking-tight"
             >
@@ -102,8 +103,7 @@ export default function InvoiceProgressGauge({ invoices, className = '' }: Props
             </motion.span>
             <motion.span 
               initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true, margin: "-50px" }}
+              animate={isInView ? { opacity: 1 } : { opacity: 0 }}
               transition={{ duration: 0.5, delay: 1 }}
               className="text-[9px] font-medium text-slate-500 mt-0.5 uppercase tracking-wider"
             >

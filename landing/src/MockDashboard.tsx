@@ -24,69 +24,69 @@ function AnimatedNumber({ value, prefix = "", suffix = "" }: { value: number, pr
 
 const DummyActivityChart = () => {
   const data = [
-    { label: 'Mon', value: 20, count: 2 },
-    { label: 'Tue', value: 35, count: 4 },
-    { label: 'Wed', value: 60, count: 7 },
-    { label: 'Thu', value: 45, count: 5 },
-    { label: 'Fri', value: 85, count: 12, isCurrent: true },
-    { label: 'Sat', value: 30, count: 3 },
-    { label: 'Sun', value: 15, count: 1 }
+    { label: 'S', value: 45, type: 'lightHatch' },
+    { label: 'M', value: 65, type: 'solidMidGreen', color: 'bg-[#2E794C]' },
+    { label: 'T', value: 50, type: 'solidLightGreen', color: 'bg-[#58C28A]', tooltip: '72%' },
+    { label: 'W', value: 85, type: 'solidDarkGreen', color: 'bg-[#144A32]' },
+    { label: 'T', value: 56, type: 'lightHatch' },
+    { label: 'F', value: 40, type: 'lightHatch' },
+    { label: 'S', value: 50, type: 'lightHatch' }
   ]
 
-  const yAxisTicks = [15, 12, 9, 6, 3, 0]
-
   return (
-    <div className="bg-white rounded-[24px] border border-slate-100/60 p-5 lg:p-6 w-full h-[320px] flex flex-col relative z-10 shadow-sm">
-      <div className="flex justify-between items-center mb-6 z-20 relative">
-        <h3 className="text-[15px] font-bold text-slate-900 tracking-tight">Invoice Analytics</h3>
-        <button className="text-[10px] sm:text-xs bg-white text-slate-700 font-bold px-3 py-1.5 rounded-full border border-slate-200 flex items-center gap-2 transition-transform hover:scale-105">
-          Week <span>▼</span>
-        </button>
+    <div className="bg-white rounded-[24px] p-5 lg:p-6 w-full h-[320px] flex flex-col relative shadow-[0_8px_30px_rgba(0,0,0,0.02)] border border-slate-100/60 z-10">
+      <div className="w-full flex justify-start mb-6 lg:mb-8">
+        <h3 className="text-[15px] font-bold text-slate-800 tracking-tight">Project Analytics</h3>
       </div>
 
-      <div className="flex-1 flex flex-col relative z-10 w-full mt-2">
-        <div className="flex-1 flex relative w-full min-h-[140px]">
-          <div className="absolute inset-0 flex flex-col justify-between pointer-events-none">
-            {yAxisTicks.map((tick, i) => (
-              <div key={i} className="flex items-center w-full relative">
-                <span className="text-[9px] font-medium text-slate-400 w-6 text-right pr-2 absolute -left-1 -translate-y-1/2">{tick}</span>
-                <div className="flex-1 border-t border-dashed border-slate-100 ml-6"></div>
-              </div>
-            ))}
-          </div>
-
-          <div className="flex-1 flex items-end justify-between h-full relative ml-2 sm:ml-4 mr-2" style={{ zIndex: 10 }}>
-            {data.map((d, i) => {
-              const solidColors = ['bg-[#1F6E4D]', 'bg-[#56C288]', 'bg-[#144b33]']
-              const barColor = solidColors[i % solidColors.length]
-              return (
-                <div key={i} className="flex flex-col items-center justify-end h-full w-full relative group/bar">
-                  <div className="relative flex justify-center items-end w-full h-full">
-                    <motion.div
-                      className={`w-[24px] sm:w-[32px] lg:w-[36px] rounded-full cursor-pointer relative ${barColor} shadow-sm`}
-                      style={{ minHeight: '32px' }}
-                      initial={{ height: "10px", opacity: 0 }}
-                      whileInView={{ height: `${d.value}%`, opacity: 1 }}
-                      viewport={{ once: true, margin: "-50px" }}
-                      transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                    >
-                      {d.isCurrent && (
-                        <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-white border-2 border-[#56C288] z-20 shadow-sm animate-pulse"></div>
-                      )}
-                    </motion.div>
-                  </div>
+      <div className="flex-1 flex flex-col w-full px-2 lg:px-6">
+        <div className="flex-1 flex items-end justify-between h-full relative" style={{ zIndex: 10 }}>
+          {data.map((d, i) => {
+            const isHatched = d.type === 'lightHatch'
+            const hatchColor = "cbd5e1" // Slate-300
+            const bgClass = isHatched ? 'bg-white' : `${d.color}`
+            const style = isHatched 
+              ? { 
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M-1 7L7 -1ZM7 5L5 7ZM-1 1L1 -1Z' stroke='%23${hatchColor}' stroke-width='0.8'/%3E%3C/svg%3E")`,
+                  border: `1.5px solid #${hatchColor}`
+                } 
+              : {}
+            
+            return (
+              <div key={i} className="flex flex-col items-center justify-end h-full w-[12%] relative group/bar">
+                <div className="relative flex justify-center items-end w-full h-full">
+                  <motion.div
+                    className={`w-full max-w-[48px] rounded-full cursor-pointer relative shadow-sm ${bgClass}`}
+                    style={{ ...style, minHeight: '36px' }}
+                    initial={{ height: "10px", opacity: 0 }}
+                    whileInView={{ height: `${d.value}%`, opacity: 1 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 1.2, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    {d.tooltip && (
+                      <motion.div 
+                        initial={{ opacity: 0, y: 5 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-50px" }}
+                        transition={{ delay: i * 0.1 + 0.5, duration: 0.5 }}
+                        className="absolute -top-7 left-1/2 -translate-x-1/2 flex flex-col items-center z-20 pointer-events-none"
+                      >
+                        <div className="bg-white border border-slate-200 shadow-[0_2px_10px_rgba(0,0,0,0.06)] rounded-full px-2 py-0.5 relative z-10 flex items-center justify-center">
+                          <span className="text-[10px] font-bold text-slate-400 tracking-tight">{d.tooltip}</span>
+                        </div>
+                        <div className="w-[1.5px] h-2 bg-slate-200 -mt-[1px] pointer-events-none"></div>
+                        <div className="absolute bottom-0 translate-y-[60%] w-1.5 h-1.5 bg-white border border-slate-300 rounded-full pointer-events-none z-10"></div>
+                      </motion.div>
+                    )}
+                  </motion.div>
                 </div>
-              )
-            })}
-          </div>
-        </div>
-
-        <div className="flex items-center justify-between w-full ml-2 sm:ml-4 pr-2 mt-4">
-          {data.map((d, i) => (
-            <div key={i} className="flex justify-center w-full text-center">
-              <span className="text-[10px] font-medium text-slate-300 uppercase tracking-wide">{d.label.charAt(0)}</span>
-            </div>
-          ))}
+                
+                <div className="mt-4 flex justify-center w-full">
+                  <span className="text-[12px] font-bold text-slate-300 uppercase">{d.label}</span>
+                </div>
+              </div>
+            )
+          })}
         </div>
       </div>
     </div>
@@ -104,7 +104,7 @@ export function MockDashboard() {
   const completedCount = 42;
   const receivedCount = 15;
 
-  const fakeGaugeInvoices = Array(completedCount).fill({ status: 3 }).concat(Array(pendingCount).fill({ status: 2 })).concat(Array(2).fill({ status: 4 })) as any[];
+  const fakeGaugeInvoices = Array(completedCount).fill({ status: 3 }).concat(Array(pendingCount).fill({ status: 0 })).concat(Array(5).fill({ status: 1 })) as any[];
 
   return (
     <div className="space-y-6 animate-in fade-in duration-700 w-full max-w-6xl mx-auto pointer-events-none select-none">
