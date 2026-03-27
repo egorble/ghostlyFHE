@@ -105,7 +105,7 @@ sudo tee /etc/nginx/sites-available/${DOMAIN} > /dev/null <<'NGINX'
 server {
     listen 80;
     listen [::]:80;
-    server_name ghostlyfhe.xyz www.ghostlyfhe.xyz;
+    server_name ghostlyfhe.xyz;
 
     # Let's Encrypt challenge
     location /.well-known/acme-challenge/ {
@@ -137,7 +137,6 @@ echo ""
 echo "► [6/7] Obtaining SSL certificate..."
 sudo certbot --nginx \
   -d ${DOMAIN} \
-  -d www.${DOMAIN} \
   --non-interactive \
   --agree-tos \
   --email ${EMAIL} \
