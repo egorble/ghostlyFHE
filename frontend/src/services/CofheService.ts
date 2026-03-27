@@ -1,4 +1,4 @@
-import { cofheClient, connectCofhe, Encryptable } from '../cofhe.ts'
+import { cofheClient, connectCofhe, ensurePermit, Encryptable } from '../cofhe.ts'
 import type { PublicClient, WalletClient } from 'viem'
 import { keccak256, toBytes } from 'viem'
 
@@ -7,33 +7,50 @@ export { cofheClient, connectCofhe, Encryptable }
 // cofhejs for decrypt (uses /sealoutput v1 which works)
 import { cofhejs } from 'cofhejs/web'
 
+// Store clients for lazy cofhejs init
+let savedPublicClient: PublicClient | null = null
+let savedWalletClient: WalletClient | null = null
 let cofhejsReady = false
+let cofhejsInitializing: Promise<void> | null = null
 
 export async function initCofhe(publicClient: PublicClient, walletClient: WalletClient) {
-  // Init @cofhe/sdk for encrypt
+  // Save clients for lazy cofhejs init later
+  savedPublicClient = publicClient
+  savedWalletClient = walletClient
+
+  // Only init @cofhe/sdk connection (no signatures needed beyond connect)
   await connectCofhe(publicClient, walletClient)
+}
 
-  // Init cofhejs for decrypt (uses /sealoutput v1)
-  try {
-    const account = walletClient.account?.address
-    if (!account) return
+// Lazily init cofhejs — called only when first decrypt is needed
+async function ensureCofhejs(): Promise<void> {
+  if (cofhejsReady) return
+  if (cofhejsInitializing) return cofhejsInitializing
 
-    console.log('[CoFHE] cofhejs.initializeWithViem starting...')
-    console.log('[CoFHE] cofhejs object keys:', Object.keys(cofhejs))
+  cofhejsInitializing = (async () => {
+    if (!savedPublicClient || !savedWalletClient) throw new Error('Wallet not connected')
+    const account = savedWalletClient.account?.address
+    if (!account) throw new Error('No account')
+
+    console.log('[CoFHE] cofhejs lazy init starting...')
     const result = await cofhejs.initializeWithViem({
-      viemClient: publicClient,
-      viemWalletClient: walletClient,
+      viemClient: savedPublicClient,
+      viemWalletClient: savedWalletClient,
       environment: 'TESTNET',
     })
-    console.log('[CoFHE] cofhejs init result:', JSON.stringify(result, (_, v) => typeof v === 'bigint' ? v.toString() : v).substring(0, 300))
     if (result.success) {
       cofhejsReady = true
       console.log('[CoFHE] cofhejs initialized for decrypt')
     } else {
       console.warn('[CoFHE] cofhejs init failed:', result.error)
+      throw new Error('cofhejs init failed')
     }
-  } catch (err) {
-    console.warn('[CoFHE] cofhejs init error:', err)
+  })()
+
+  try {
+    await cofhejsInitializing
+  } finally {
+    cofhejsInitializing = null
   }
 }
 
@@ -81,6 +98,7 @@ export async function decryptDescription(encHex: string, issuer: string, buyer: 
 // ==================== ENCRYPT (via @cofhe/sdk) ====================
 
 export async function encryptAddress(address: string) {
+  await ensurePermit()
   const [encrypted] = await cofheClient.encryptInputs([
     Encryptable.address(address as `0x${string}`)
   ]).execute()
@@ -88,6 +106,7 @@ export async function encryptAddress(address: string) {
 }
 
 export async function encryptUint8(value: number) {
+  await ensurePermit()
   const [encrypted] = await cofheClient.encryptInputs([
     Encryptable.uint8(BigInt(value))
   ]).execute()
@@ -95,6 +114,7 @@ export async function encryptUint8(value: number) {
 }
 
 export async function encryptUint32(value: number) {
+  await ensurePermit()
   const [encrypted] = await cofheClient.encryptInputs([
     Encryptable.uint32(BigInt(value))
   ]).execute()
@@ -102,6 +122,7 @@ export async function encryptUint32(value: number) {
 }
 
 export async function encryptUint128(value: bigint) {
+  await ensurePermit()
   const [encrypted] = await cofheClient.encryptInputs([
     Encryptable.uint128(value)
   ]).execute()
@@ -117,6 +138,7 @@ export async function encryptInvoiceData(params: {
   buyerAddress: string
   currency: number
 }) {
+  await ensurePermit()
   const [encIssuerAddr, encBuyerAddr, encCurrency] = await cofheClient.encryptInputs([
     Encryptable.address(params.issuerAddress as `0x${string}`),
     Encryptable.address(params.buyerAddress as `0x${string}`),
@@ -131,6 +153,7 @@ export async function encryptLineItemData(params: {
   unitPrice: number
   amount: number
 }) {
+  await ensurePermit()
   const [encQuantity, encUnitPrice, encAmount] = await cofheClient.encryptInputs([
     Encryptable.uint32(BigInt(params.quantity)),
     Encryptable.uint128(BigInt(params.unitPrice)),
@@ -151,7 +174,8 @@ async function unsealValue(ctHash: bigint, utype: number): Promise<bigint> {
   const key = ctHash.toString(16).substring(0, 16)
   if (failedHandles.has(key)) throw new Error('Previously failed')
 
-  if (!cofhejsReady) throw new Error('cofhejs not initialized')
+  // Lazily init cofhejs on first decrypt
+  await ensureCofhejs()
 
   try {
     const result = await cofhejs.unseal(ctHash, utype)
