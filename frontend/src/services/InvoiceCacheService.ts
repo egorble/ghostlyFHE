@@ -10,7 +10,7 @@ function serializableInvoice(inv: Invoice): Invoice {
     dueDate: typeof inv.dueDate === 'bigint' ? Number(inv.dueDate) : inv.dueDate,
     createdAt: typeof inv.createdAt === 'bigint' ? Number(inv.createdAt) : inv.createdAt,
     lineItemCount: typeof inv.lineItemCount === 'bigint' ? Number(inv.lineItemCount) : inv.lineItemCount,
-  } as Invoice
+  } as unknown as Invoice
 }
 
 const SYNC_INTERVAL = 30_000 // 30 seconds
@@ -158,7 +158,7 @@ async function autoDecryptInvoices(invoices: Invoice[]) {
 }
 
 // Decrypt helpers that check cache first
-export async function getCachedOrDecryptTotals(invoiceId: bigint, issuer?: string, buyer?: string): Promise<{ subtotal: number; amountPaid: number; currency: number } | null> {
+export async function getCachedOrDecryptTotals(invoiceId: bigint, _issuer?: string, _buyer?: string): Promise<{ subtotal: number; amountPaid: number; currency: number } | null> {
   const store = useInvoiceStore.getState()
   const id = invoiceId.toString()
   const cached = store.decryptedTotals[id]

@@ -16,4 +16,7 @@ export default defineConfig({
       'Cross-Origin-Embedder-Policy': 'require-corp',
     },
   },
+  preview: {
+    allowedHosts: ['app.ghostlyfhe.xyz'],
+  },
 })

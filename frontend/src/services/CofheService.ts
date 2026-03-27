@@ -5,7 +5,6 @@ import { keccak256, toBytes } from 'viem'
 export { cofheClient, connectCofhe, Encryptable }
 
 // cofhejs for decrypt (uses /sealoutput v1 which works)
-// @ts-expect-error — cofhejs types
 import { cofhejs } from 'cofhejs/web'
 
 let cofhejsReady = false
@@ -54,7 +53,7 @@ function deriveDescKey(issuer: string, buyer: string, invoiceId: bigint): Uint8A
 export async function encryptDescription(text: string, issuer: string, buyer: string, invoiceId: bigint): Promise<`0x${string}`> {
   if (!text) return '0x'
   const keyBytes = deriveDescKey(issuer, buyer, invoiceId)
-  const key = await crypto.subtle.importKey('raw', keyBytes, 'AES-GCM', false, ['encrypt'])
+  const key = await crypto.subtle.importKey('raw', keyBytes.buffer as ArrayBuffer, 'AES-GCM', false, ['encrypt'])
   const iv = crypto.getRandomValues(new Uint8Array(12))
   const enc = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, new TextEncoder().encode(text))
   // Format: iv(12) + ciphertext
@@ -71,7 +70,7 @@ export async function decryptDescription(encHex: string, issuer: string, buyer: 
     const iv = bytes.slice(0, 12)
     const ciphertext = bytes.slice(12)
     const keyBytes = deriveDescKey(issuer, buyer, invoiceId)
-    const key = await crypto.subtle.importKey('raw', keyBytes, 'AES-GCM', false, ['decrypt'])
+    const key = await crypto.subtle.importKey('raw', keyBytes.buffer as ArrayBuffer, 'AES-GCM', false, ['decrypt'])
     const dec = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, ciphertext)
     return new TextDecoder().decode(dec)
   } catch {

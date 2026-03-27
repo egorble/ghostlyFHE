@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
-import { PiProhibit as Ban, PiWarning as AlertTriangle, PiCheckCircle as CheckCircle, PiCurrencyDollar as DollarSign, PiDownloadSimple as Download, PiShield as Shield } from 'react-icons/pi'
+import { PiProhibit as Ban, PiWarning as AlertTriangle, PiCheckCircle as CheckCircle, PiDownloadSimple as Download, PiShield as Shield } from 'react-icons/pi'
 import type { Address } from 'viem'
 import { motion } from 'framer-motion'
 import { StatusBadge } from '../ui/status-badge'
@@ -13,8 +13,6 @@ import { useInvoiceStore } from '../../stores/useInvoiceStore'
 import { useTransactionStore } from '../../stores/useTransactionStore'
 import * as Fhenix from '../../services/FhenixService'
 import { encryptPayment } from '../../services/CofheService'
-import { ADDRESSES } from '../../contracts/addresses'
-import { ABIS } from '../../contracts/abis'
 import type { Invoice } from '../../lib/types'
 import { InvoiceStatus } from '../../lib/types'
 
@@ -28,10 +26,7 @@ export function InvoiceDetail({ invoiceId }: InvoiceDetailProps) {
   const { isProcessing, setProcessing, phase, phaseHistory, startPhase, completePhase, reset } = useTransactionStore()
   const [invoice, setInvoice] = useState<Invoice | null>(null)
   const [loading, setLoading] = useState(true)
-  const [paymentAmount, setPaymentAmount] = useState('')
-
   const chain = chainStatus.get(invoiceId)
-  const localMeta = localMetadata.get(invoiceId)
   const isIssuer = address && invoice?.issuer?.toLowerCase() === address.toLowerCase()
   const isBuyer = address && invoice?.buyer?.toLowerCase() === address.toLowerCase()
 
