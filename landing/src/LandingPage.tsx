@@ -409,115 +409,123 @@ export function LandingPage() {
       </section>
 
       {/* Bento Grid Section */}
-      <section className="relative z-20 py-24 px-6 bg-[#0f172a] text-white rounded-[48px] max-w-[1400px] mx-auto overflow-hidden mt-10">
-         {/* Background elements for the dark section */}
-         <div className="absolute -top-32 -right-32 w-[600px] h-[600px] bg-[#56C288]/15 rounded-full blur-[120px] pointer-events-none"></div>
-         <div className="absolute bottom-0 left-0 w-[800px] h-[400px] bg-blue-500/10 rounded-full blur-[140px] pointer-events-none"></div>
-         
-         <div className="max-w-6xl mx-auto relative z-10">
-            <h2 className="text-4xl md:text-5xl font-medium tracking-tight mb-16 text-center leading-[1.2]">
-               Confidential Invoicing at <br /> the speed of Web3
+      <section className="relative z-20 py-32 px-6 bg-[#09090b] text-white">
+         <div className="max-w-5xl mx-auto relative z-10">
+            <h2 className="text-3xl md:text-[44px] font-medium tracking-tight mb-20 text-center leading-[1.2]">
+               Confidential Invoicing <br/> at the speed of Web3
             </h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-               {/* Bento 1: Large Green Card */}
-               <div className="lg:col-span-2 bg-slate-800/40 border border-slate-700/50 rounded-[32px] p-10 flex items-start overflow-hidden relative group h-[380px]">
-                  <div className="z-10 max-w-[280px]">
-                     <h3 className="text-2xl font-semibold mb-3">Encrypted Escrow & Splitters</h3>
-                     <p className="text-slate-400 text-[15px] leading-relaxed">Provide secure, trustless payment guarantees. Ghostly's Confidential Splitters automatically route funds to multiple stakeholders while keeping amounts private.</p>
-                  </div>
-                  {/* 3D Card abstract */}
-                  <div className="absolute -bottom-10 -right-10 w-[420px] h-[280px] rounded-3xl bg-gradient-to-br from-[#56C288] to-[#1F6E4D] shadow-[0_20px_50px_rgba(31,110,77,0.4)] rotate-[-12deg] group-hover:rotate-[-8deg] transition-all duration-700 border border-white/20 p-8 flex flex-col justify-between hidden sm:flex">
-                     <div className="flex justify-between items-start">
-                        <span className="text-white font-bold text-xl tracking-wide opacity-90">Ghostly</span>
-                        <Shield className="w-8 h-8 text-white/50" />
-                     </div>
-                     <div className="w-full">
-                        <div className="font-mono text-[16px] sm:text-[18px] tracking-wider text-white/95 mb-4 drop-shadow-md break-all">0x71C7...f6d8976F</div>
-                        <div className="flex justify-between items-center opacity-80 font-mono text-xs uppercase tracking-wider w-full">
-                           <div>
-                              <div className="text-[9px] opacity-70 mb-0.5">Network</div>
-                              <div>Fhenix L2</div>
-                           </div>
-                           <div className="text-right">
-                              <div className="text-[9px] opacity-70 mb-0.5">Status</div>
-                              <div className="text-[#a7f3d0]">Encrypted</div>
-                           </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
+               
+               {/* Feature 1: FHE Encrypted Invoices (like the Virtual Cards from screenshot) */}
+               <div className="flex flex-col">
+                  <div className="bg-[#18181b] border border-[#27272a] rounded-[24px] h-[340px] mb-6 relative overflow-hidden flex items-end justify-center group">
+                     {/* subtle radial gradient for realism */}
+                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(86,194,136,0.05)_0%,transparent_60%)] pointer-events-none"></div>
+                     <span className="absolute top-0 inset-x-0 h-1/2 bg-gradient-to-b from-white/[0.015] to-transparent pointer-events-none"></span>
+                     
+                     <div className="w-full max-w-[320px] h-[220px] bg-[#fcfdfd] text-slate-900 rounded-t-2xl p-6 shadow-2xl border border-[#3f3f46] transform translate-y-6 group-hover:translate-y-2 transition-transform duration-500 relative z-10 flex flex-col">
+                        <div className="font-bold text-lg mb-6 flex justify-between items-center">
+                           <span className="tracking-widest uppercase text-slate-800">INVOICE #1234</span>
+                           <div className="px-3 py-1 bg-slate-100 text-slate-500 font-bold text-[10px] rounded-full uppercase tracking-wider">Fhenix</div>
+                        </div>
+                        <div className="space-y-4">
+                           <div className="h-2 w-full bg-slate-200 rounded-full"></div>
+                           <div className="h-2 w-4/5 bg-slate-200 rounded-full"></div>
+                           <div className="h-2 w-2/3 bg-slate-200 rounded-full"></div>
+                        </div>
+                        <div className="mt-auto flex justify-between items-center border-t border-slate-200 pt-5">
+                           <div className="h-3 w-16 bg-slate-300 rounded-full"></div>
+                           <div className="px-3 py-1.5 bg-[#56C288]/10 text-[#115E3E] font-bold text-[10px] rounded uppercase tracking-wider border border-[#56C288]/20">Paid In Full</div>
                         </div>
                      </div>
                   </div>
-                  <div className="absolute top-20 right-20 w-[300px] h-[200px] rounded-3xl bg-gradient-to-br from-[#4ade80] to-[#10b981] shadow-xl rotate-[10deg] group-hover:rotate-[15deg] transition-all duration-700 border border-white/20 opacity-40 blur-[2px] -z-10"></div>
+                  <h3 className="text-[19px] font-medium text-white mb-2 tracking-tight">FHE Encrypted Invoices</h3>
+                  <p className="text-[#a1a1aa] text-[15px] leading-[1.6]">Amounts and participants are encrypted on-chain using TFHE. Nothing is ever exposed in plaintext to block explorers.</p>
                </div>
 
-               {/* Bento 2: Invoice Sim */}
-               <div className="bg-slate-800/40 border border-slate-700/50 rounded-[32px] p-8 flex flex-col relative overflow-hidden h-[380px] group">
-                  <div className="z-10 bg-[#0f172a]/20 p-1 mb-8">
-                     <h3 className="text-xl font-semibold mb-2">FHE Encrypted Invoices</h3>
-                     <p className="text-slate-400 text-[14px]">Amounts and participants are encrypted on-chain using TFHE. Nothing is ever exposed in plaintext.</p>
-                  </div>
-                  <div className="w-full h-[220px] absolute -bottom-4 left-6 bg-slate-50 text-slate-900 rounded-t-xl p-5 shadow-2xl border border-slate-200 transform rotate-6 group-hover:rotate-3 transition-transform duration-500">
-                     <div className="font-bold text-lg mb-4 flex justify-between items-center">
-                        <span className="tracking-tight">INVOICE #1234</span>
-                        <div className="w-8 h-8 rounded-full bg-slate-200"></div>
-                     </div>
-                     <div className="space-y-3">
-                        <div className="h-2.5 w-full bg-slate-200 rounded-full"></div>
-                        <div className="h-2.5 w-3/4 bg-slate-200 rounded-full"></div>
-                     </div>
-                     <div className="mt-8 flex justify-between items-center border-t border-slate-200 pt-4">
-                        <div className="h-3 w-16 bg-slate-300 rounded-full"></div>
-                        <div className="px-3 py-1 bg-[#56C288]/10 text-[#115E3E] font-bold text-[10px] rounded uppercase tracking-wider">Paid In Full</div>
-                     </div>
-                  </div>
-               </div>
-
-               {/* Bento 3: Data Tracking */}
-               <div className="bg-slate-800/40 border border-slate-700/50 rounded-[32px] p-8 h-[360px] flex flex-col group">
-                  <h3 className="text-xl font-semibold mb-2">Confidential Receipts</h3>
-                  <p className="text-slate-400 text-[14px] leading-relaxed mb-8">Automatically issue encrypted receipts upon payment verification, maintaining zero-knowledge proofs of settlement.</p>
-                  
-                  <div className="flex-1 w-full bg-slate-900/80 rounded-2xl border border-slate-700 p-4 relative overflow-hidden flex flex-col gap-3">
-                     <div className="flex justify-between text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1 border-b border-slate-700 pb-2">
-                        <span>Date</span>
-                        <span>Amount</span>
-                     </div>
-                     {[1,2,3].map((i) => (
-                        <div key={i} className="flex justify-between items-center group-hover:bg-slate-800/50 p-1.5 -mx-1.5 rounded transition-colors duration-300">
-                           <div className="flex items-center gap-2">
-                              <div className="w-6 h-6 rounded-full bg-slate-800 flex items-center justify-center border border-slate-700">
-                                 <div className="w-2 h-2 rounded-full bg-[#56C288]"></div>
+               {/* Feature 2: Encrypted Escrow & Splitters */}
+               <div className="flex flex-col">
+                  <div className="bg-[#18181b] border border-[#27272a] rounded-[24px] h-[340px] mb-6 relative overflow-hidden flex items-center justify-center group p-8">
+                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(86,194,136,0.05)_0%,transparent_60%)] pointer-events-none"></div>
+                     <span className="absolute top-0 inset-x-0 h-1/2 bg-gradient-to-b from-white/[0.015] to-transparent pointer-events-none"></span>
+                     
+                     <div className="w-full max-w-[320px] h-[190px] rounded-[20px] bg-gradient-to-br from-[#74d09d] via-[#56C288] to-[#1F6E4D] shadow-[0_20px_50px_rgba(31,110,77,0.25)] transition-transform duration-700 group-hover:scale-105 group-hover:rotate-1 border border-white/20 p-6 flex flex-col justify-between relative z-10">
+                        <div className="flex justify-between items-start">
+                           <span className="text-white font-bold text-lg tracking-wide opacity-90">Ghostly Splitter</span>
+                           <Shield className="w-6 h-6 text-white/50" />
+                        </div>
+                        <div className="w-full">
+                           <div className="font-mono text-[16px] tracking-wider text-white/95 mb-4 drop-shadow-md">0x71C7...8976F</div>
+                           <div className="flex justify-between items-center opacity-80 font-mono text-[10px] uppercase tracking-wider w-full">
+                              <div>
+                                 <div className="opacity-70 mb-0.5">Network</div>
+                                 <div className="font-semibold">Fhenix L2</div>
                               </div>
-                              <div className="h-2 w-16 bg-slate-600 rounded-full"></div>
+                              <div className="text-right">
+                                 <div className="opacity-70 mb-0.5">Status</div>
+                                 <div className="text-[#a7f3d0] font-semibold">Active</div>
+                              </div>
                            </div>
-                           <div className="h-2.5 w-12 bg-slate-400 rounded-full"></div>
                         </div>
-                     ))}
-                     <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-slate-900 to-transparent pointer-events-none"></div>
+                     </div>
                   </div>
+                  <h3 className="text-[19px] font-medium text-white mb-2 tracking-tight">Encrypted Escrow & Splitters</h3>
+                  <p className="text-[#a1a1aa] text-[15px] leading-[1.6]">Provide secure, trustless payment guarantees. Confidential Splitters automatically route funds to multiple stakeholders efficiently.</p>
                </div>
 
-               {/* Bento 4: Accounting Wide */}
-               <div className="lg:col-span-2 bg-slate-800/40 border border-slate-700/50 rounded-[32px] p-10 h-[360px] flex items-center gap-6 lg:gap-12 group overflow-hidden">
-                  <div className="flex-1">
-                     <h3 className="text-xl font-semibold mb-3">Zero-Knowledge Analytics</h3>
-                     <p className="text-slate-400 text-[15px] leading-relaxed">Collect encrypted statistics for business intelligence. Ghostly provides macro insights without ever revealing the sensitive data of individual invoices.</p>
-                  </div>
-                  <div className="w-[300px] lg:w-[360px] h-[280px] bg-slate-900 rounded-2xl border border-slate-700 hidden sm:flex flex-col p-6 relative gap-4 rotate-3 group-hover:rotate-0 transition-all duration-500 shadow-xl lg:translate-x-8">
-                     {/* Table Mockup */}
-                     <div className="flex justify-between items-center text-[10px] text-slate-500 font-bold uppercase tracking-wider border-b border-slate-700 pb-2">
-                        <span className="w-16">Date</span>
-                        <span className="flex-1">To/From</span>
-                        <span className="w-16 text-right">Amount</span>
-                     </div>
-                     {[1,2,3,4,5].map(i => (
-                        <div key={i} className="flex items-center text-xs border-b border-slate-800/50 pb-2">
-                           <span className="w-16 text-slate-500 font-mono">Mar {24-i}</span>
-                           <span className="flex-1 text-slate-300 font-medium">Ghostly Invoice</span>
-                           <span className="w-16 text-right text-slate-300">****</span>
+               {/* Feature 3: Confidential Receipts */}
+               <div className="flex flex-col">
+                  <div className="bg-[#18181b] border border-[#27272a] rounded-[24px] h-[340px] mb-6 relative overflow-hidden flex items-center justify-center group p-8">
+                     <span className="absolute top-0 inset-x-0 h-1/2 bg-gradient-to-b from-white/[0.015] to-transparent pointer-events-none"></span>
+                     
+                     <div className="w-full max-w-[300px] bg-[#27272a]/50 rounded-2xl border border-[#3f3f46]/50 p-5 relative overflow-hidden flex flex-col gap-3 shadow-xl group-hover:scale-105 transition-transform duration-500 z-10 backdrop-blur-md">
+                        <div className="flex justify-between text-[10px] uppercase tracking-wider text-[#a1a1aa] font-bold mb-2 border-b border-[#3f3f46] pb-3">
+                           <span>Date</span>
+                           <span>Verif. Status</span>
                         </div>
-                     ))}
+                        {[1,2,3].map((i) => (
+                           <div key={i} className="flex justify-between items-center p-2.5 -mx-2.5 rounded-lg hover:bg-[#3f3f46]/40 transition-colors duration-300">
+                              <div className="flex items-center gap-3">
+                                 <div className="w-7 h-7 rounded-full bg-[#18181b] flex items-center justify-center border border-[#3f3f46]">
+                                    <div className="w-2.5 h-2.5 rounded-full bg-[#56C288]"></div>
+                                 </div>
+                                 <div className="h-2 w-16 bg-[#52525b] rounded-full"></div>
+                              </div>
+                              <div className="h-2.5 w-12 bg-[#52525b] rounded-full"></div>
+                           </div>
+                        ))}
+                     </div>
                   </div>
+                  <h3 className="text-[19px] font-medium text-white mb-2 tracking-tight">Confidential Receipts</h3>
+                  <p className="text-[#a1a1aa] text-[15px] leading-[1.6]">Automatically issue encrypted receipts upon payment verification, maintaining zero-knowledge proofs of settlement.</p>
                </div>
+
+               {/* Feature 4: Zero-Knowledge Analytics */}
+               <div className="flex flex-col">
+                  <div className="bg-[#18181b] border border-[#27272a] rounded-[24px] h-[340px] mb-6 relative overflow-hidden flex items-center justify-center group p-8">
+                     <span className="absolute top-0 inset-x-0 h-1/2 bg-gradient-to-b from-white/[0.015] to-transparent pointer-events-none"></span>
+                     
+                     <div className="w-full max-w-[360px] bg-[#18181b] rounded-2xl border border-[#3f3f46] p-5 relative shadow-2xl z-10 group-hover:scale-[1.02] transition-transform duration-500">
+                        {/* Table Mockup */}
+                        <div className="flex justify-between items-center text-[10px] text-[#a1a1aa] font-medium uppercase tracking-wider border-b border-[#27272a] pb-3 mb-2">
+                           <span className="w-16">Date</span>
+                           <span className="flex-1">To/From</span>
+                           <span className="w-20 text-right">Amount</span>
+                        </div>
+                        {[1,2,3,4,5].map(i => (
+                           <div key={i} className="flex items-center text-xs border-b border-[#27272a] py-3 group-hover:pl-2 transition-all duration-300">
+                              <span className="w-16 text-[#a1a1aa] font-mono">Mar {24-i}</span>
+                              <span className="flex-1 text-slate-300 font-medium">Payment Tx</span>
+                              <span className="w-20 text-right text-[#56C288] font-mono tracking-widest text-[14px] leading-none -mt-1 shadow-[#56C288]/30 drop-shadow-sm">***</span>
+                           </div>
+                        ))}
+                     </div>
+                  </div>
+                  <h3 className="text-[19px] font-medium text-white mb-2 tracking-tight">Zero-Knowledge Analytics</h3>
+                  <p className="text-[#a1a1aa] text-[15px] leading-[1.6]">Collect encrypted statistics for business intelligence. Ghostly provides macro insights without ever revealing the sensitive data.</p>
+               </div>
+               
             </div>
          </div>
       </section>
