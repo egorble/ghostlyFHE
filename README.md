@@ -1,170 +1,203 @@
-# Fhenix CoFHE Hardhat Starter
+# Ghostly FHE
 
-This project is a starter repository for developing FHE (Fully Homomorphic Encryption) smart contracts on the Fhenix network using CoFHE (Confidential Computing Framework for Homomorphic Encryption).
+Privacy-preserving invoice and payment system built on Fhenix using Fully Homomorphic Encryption. All sensitive financial data — amounts, addresses, line items — is encrypted on-chain and can only be decrypted by authorized parties.
 
-## Prerequisites
+**Live:** https://ghostlyfhe.xyz | **App:** https://app.ghostlyfhe.xyz
 
-- Node.js (v18 or later)
-- pnpm (recommended package manager)
+## How It Works
 
-## Installation
+Ghostly lets users create, send, and pay invoices where every piece of sensitive data is encrypted using FHE. The blockchain stores only ciphertexts — no one (including validators) can see the amounts or parties involved. Only the invoice issuer and buyer can decrypt the data through a permit system.
 
-1. Clone the repository:
+### Encryption Model
 
-```bash
-git clone https://github.com/fhenixprotocol/cofhe-hardhat-starter.git
-cd cofhe-hardhat-starter
+| Data | Method | Who Can Decrypt |
+|------|--------|-----------------|
+| Amounts (subtotal, payments) | FHE `euint128` | Issuer, buyer, granted auditors |
+| Addresses (issuer, buyer) | FHE `eaddress` | Issuer, buyer |
+| Currency type | FHE `euint8` | Issuer, buyer |
+| Line item descriptions | AES-GCM (client-side) | Issuer, buyer (shared derived key) |
+| Order ID, memo | Keccak256 hash on-chain | Off-chain verification only |
+
+**FHE encryption** allows the smart contract to perform computations on encrypted data (e.g., accumulating payment totals) without ever decrypting it. **AES-GCM** is used for data that doesn't need on-chain computation (descriptions), with a key derived from `keccak256(issuer:buyer:invoiceId)`.
+
+## Architecture
+
+```
+                    ┌──────────────────────────────┐
+                    │         Frontend (React)       │
+                    │  Vite + TailwindCSS + Zustand  │
+                    └──────────┬───────────────────┘
+                               │
+                    ┌──────────▼───────────────────┐
+                    │      Encryption Layer          │
+                    │  @cofhe/sdk (encrypt)           │
+                    │  cofhejs (decrypt/unseal)       │
+                    │  AES-GCM (descriptions)         │
+                    └──────────┬───────────────────┘
+                               │
+          ┌────────────────────▼────────────────────────┐
+          │              Smart Contracts (Sepolia)        │
+          │                                               │
+          │  ConfidentialInvoice ◄──► ConfidentialReceipt │
+          │         │                                     │
+          │         ▼                                     │
+          │  InvoiceAnalytics    ConfidentialPaymentSplitter │
+          └───────────────────────────────────────────────┘
 ```
 
-2. Install dependencies:
+## Smart Contracts
 
-```bash
-pnpm install
+### ConfidentialInvoice
+
+Core contract managing the full invoice lifecycle. Stores encrypted issuer/buyer addresses, encrypted amounts, and hashed metadata. Supports statuses: Created → Sent → PartiallyPaid → Paid (or Overdue / Disputed / Cancelled).
+
+Key operations:
+- `createInvoice()` — create with encrypted addresses, currency, and due date
+- `addLineItem()` — add FHE-encrypted line items (qty, unit price, amount) with AES-encrypted description
+- `sendInvoice()` — finalize and notify analytics
+- `payInvoice()` — buyer submits encrypted payment, contract accumulates `amountPaid` homomorphically
+- `disputeInvoice()` / `resolveDispute()` — conflict resolution
+- `grantAccess()` / `revokeAccess()` — delegate decryption to auditors with time-based expiry
+
+### ConfidentialReceipt
+
+Automatically issues encrypted receipts on each payment. Receipt amounts are only decryptable by the payer and issuer.
+
+### InvoiceAnalytics
+
+Aggregates encrypted statistics per user — total invoiced, total received, total paid, invoice count, payment count. All values are FHE-encrypted; users can only view their own stats.
+
+### ConfidentialPaymentSplitter
+
+Splits an encrypted payment across multiple parties. Each participant sees only their own share.
+
+### Contract Addresses (Sepolia)
+
+```
+ConfidentialInvoice:         0xf19d5A1ab4F4DD9714800676fCB00CA48aEaD819
+ConfidentialReceipt:         0x206F3ac8Dd7DCd0681cf0D760AeBD6111D17c687
+InvoiceAnalytics:            0x6725331525a49051e0caf0927696896eD30e27b9
+ConfidentialPaymentSplitter: 0x57612c0347cFDe7f1a1dfF1c0995D888cA5A59B7
 ```
 
-## Available Scripts
+## Frontend
 
-### Development
+Single-page React app with wallet-based authentication via MetaMask.
 
-- `pnpm compile` - Compile the smart contracts
-- `pnpm clean` - Clean the project artifacts
-- `pnpm test` - Run tests on the local CoFHE network
-- `pnpm test:hardhat` - Run tests on the Hardhat network
-- `pnpm test:localcofhe` - Run tests on the local CoFHE network
+### Pages
 
-### Local CoFHE Network
+| Route | Description |
+|-------|-------------|
+| `/` | Dashboard — invoice counts, activity chart, recent invoices |
+| `/invoices` | Invoice list with tabs for issued & received |
+| `/invoices/create` | Multi-step invoice creation form |
+| `/invoices/:id` | Invoice detail with decrypted data, payment actions |
+| `/receipts` | Payment receipt history |
+| `/audit` | Grant/revoke audit access to delegates |
+| `/audit/verify` | Verify audit authorization packages |
 
-- `pnpm localcofhe:start` - Start a local CoFHE network
-- `pnpm localcofhe:stop` - Stop the local CoFHE network
-- `pnpm localcofhe:faucet` - Get test tokens from the faucet
-- `pnpm localcofhe:deploy` - Deploy contracts to the local CoFHE network
+### Key Services
 
-### Contract Tasks
+- **FhenixService** — reads/writes to smart contracts via Viem
+- **CofheService** — FHE encrypt (via `@cofhe/sdk`) and decrypt (via `cofhejs`), plus AES-GCM for descriptions
+- **InvoiceCacheService** — background sync every 30s, caches invoices and decrypted values in Zustand store
+- **RpcQueue** — request throttling and deduplication for RPC calls
 
-- `pnpm task:deploy` - Deploy contracts
-- `pnpm task:addCount` - Add to the counter
-- `pnpm task:getCount` - Get the current count
-- `pnpm task:getFunds` - Get funds from the contract
+### Lazy Initialization
+
+FHE signatures are deferred to avoid prompting users on page load:
+- `cofheClient.connect()` — runs at wallet connection (1 signature)
+- `ensurePermit()` — runs before first encryption operation
+- `cofhejs.initializeWithViem()` — runs before first decryption operation
+
+## Tech Stack
+
+**Contracts:** Solidity 0.8.25, Hardhat, OpenZeppelin (UUPS upgradeable), Fhenix CoFHE
+
+**Frontend:** React 19, Vite, TypeScript, TailwindCSS, Zustand, Viem, Framer Motion
+
+**FHE:** `@cofhe/sdk` (encryption), `cofhejs` (decryption/unseal), TFHE WASM
+
+**Deployment:** Nginx reverse proxy, systemd services, Let's Encrypt SSL, Sepolia testnet
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- MetaMask with Sepolia ETH
+
+### Install & Run
+
+```bash
+# Root — contracts
+npm install
+npx hardhat compile
+
+# Frontend
+cd frontend
+npm install
+npm run dev
+# → http://localhost:5173
+
+# Landing page
+cd landing
+npm install
+npm run dev
+# → http://localhost:5174
+```
+
+### Environment Variables
+
+Create `.env` in the root:
+
+```
+PRIVATE_KEY=<deployer_private_key>
+SEPOLIA_RPC_URL=https://ethereum-sepolia.publicnode.com
+ETHERSCAN_API_KEY=<for_contract_verification>
+```
+
+### Deploy Contracts
+
+```bash
+npx hardhat deploy-ghostly --network eth-sepolia
+```
+
+### Deploy to Server
+
+```bash
+# Full deployment (landing + app + SSL + systemd)
+bash deploy/deploy-all.sh
+
+# Quick update after code changes
+bash deploy/update-landing.sh
+bash deploy/update-app.sh
+```
 
 ## Project Structure
 
-- `contracts/` - Smart contract source files
-  - `Counter.sol` - Example FHE counter contract
-  - `Lock.sol` - Example time-locked contract
-- `test/` - Test files
-- `ignition/` - Hardhat Ignition deployment modules
-
-## `cofhejs` and `cofhe-hardhat-plugin`
-
-This project uses cofhejs and the CoFHE Hardhat plugin to interact with FHE (Fully Homomorphic Encryption) smart contracts. Here are the key features and utilities:
-
-### cofhejs Features
-
-- **Encryption/Decryption**: Encrypt and decrypt values using FHE
-
-  ```typescript
-  import { cofhejs, Encryptable, FheTypes } from 'cofhejs/node'
-
-  // Encrypt a value
-  const [encryptedInput] = await cofhejs.encrypt(
-  	(step) => {
-  		console.log(`Encrypt step - ${step}`)
-  	},
-  	[Encryptable.uint32(5n)]
-  )
-
-  // Decrypt a value
-  const decryptedResult = await cofhejs.decrypt(encryptedValue, FheTypes.Uint32)
-  ```
-
-- **Unsealing**: Unseal encrypted values from the blockchain
-  ```typescript
-  const unsealedResult = await cofhejs.unseal(encryptedValue, FheTypes.Uint32)
-  ```
-
-### `cofhe-hardhat-plugin` Features
-
-- **Network Configuration**: Automatically configures the cofhe enabled networks
-- **Wallet Funding**: Automatically funds wallets on the local network
-
-  ```typescript
-  import { localcofheFundWalletIfNeeded } from 'cofhe-hardhat-plugin'
-  await localcofheFundWalletIfNeeded(hre, walletAddress)
-  ```
-
-- **Signer Initialization**: Initialize cofhejs with a Hardhat signer
-
-  ```typescript
-  import { cofhejs_initializeWithHardhatSigner } from 'cofhe-hardhat-plugin'
-  await cofhejs_initializeWithHardhatSigner(signer)
-  ```
-
-- **Testing Utilities**: Helper functions for testing FHE contracts
-  ```typescript
-  import { expectResultSuccess, expectResultValue, mock_expectPlaintext, isPermittedCofheEnvironment } from 'cofhe-hardhat-plugin'
-  ```
-
-### Environment Configuration
-
-The plugin supports different environments:
-
-- `MOCK`: For testing with mocked FHE operations
-- `LOCAL`: For testing with a local CoFHE network (whitelist only)
-- `TESTNET`: For testing and tasks using `arb-sepolia` and `eth-sepolia`
-
-You can check the current environment using:
-
-```typescript
-if (!isPermittedCofheEnvironment(hre, 'MOCK')) {
-	// Skip test or handle accordingly
-}
 ```
-
-## Links and Additional Resources
-
-### `cofhejs`
-
-[`cofhejs`](https://github.com/FhenixProtocol/cofhejs) is the JavaScript/TypeScript library for interacting with FHE smart contracts. It provides functions for encryption, decryption, and unsealing FHE values.
-
-#### Key Features
-
-- Encryption of data before sending to FHE contracts
-- Unsealing encrypted values from contracts
-- Managing permits for secure contract interactions
-- Integration with Web3 libraries (ethers.js and viem)
-
-### `cofhe-mock-contracts`
-
-[`cofhe-mock-contracts`](https://github.com/FhenixProtocol/cofhe-mock-contracts) provides mock implementations of CoFHE contracts for testing FHE functionality without the actual coprocessor.
-
-#### Features
-
-- Mock implementations of core CoFHE contracts:
-  - MockTaskManager
-  - MockQueryDecrypter
-  - MockZkVerifier
-  - ACL (Access Control List)
-- Synchronous operation simulation with mock delays
-- On-chain access to unencrypted values for testing
-
-#### Integration with Hardhat and cofhejs
-
-Both `cofhejs` and `cofhe-hardhat-plugin` interact directly with the mock contracts:
-
-- When imported in `hardhat.config.ts`, `cofhe-hardhat-plugin` injects necessary mock contracts into the Hardhat testnet
-- `cofhejs` automatically detects mock contracts and adjusts behavior for test environments
-
-#### Mock Behavior Differences
-
-- **Symbolic Execution**: In mocks, ciphertext hashes point to plaintext values stored on-chain
-- **On-chain Decryption**: Mock decryption adds simulated delays to mimic real behavior
-- **ZK Verification**: Mock verifier handles on-chain storage of encrypted inputs
-- **Off-chain Decryption**: When using `cofhejs.unseal()`, mocks return plaintext values directly from on-chain storage
+ghostly/
+├── contracts/
+│   ├── ConfidentialInvoice.sol
+│   ├── ConfidentialReceipt.sol
+│   ├── InvoiceAnalytics.sol
+│   └── ConfidentialPaymentSplitter.sol
+├── frontend/
+│   └── src/
+│       ├── components/        # UI components
+│       ├── pages/             # Route pages
+│       ├── services/          # FHE, contract interaction, caching
+│       ├── stores/            # Zustand state management
+│       ├── contracts/         # ABIs and addresses
+│       ├── lib/               # Types, utils, constants
+│       └── cofhe.ts           # CoFHE client setup
+├── landing/                   # Marketing landing page
+├── deploy/                    # Server deployment scripts
+├── tasks/                     # Hardhat deploy tasks
+└── hardhat.config.ts
+```
 
 ## License
 
 MIT
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
