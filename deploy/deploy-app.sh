@@ -66,7 +66,7 @@ NPM_CACHE_DIR="/opt/ghostly/.npm-cache"
 sudo mkdir -p "$NPM_CACHE_DIR"
 sudo chown -R www-data:www-data "$NPM_CACHE_DIR"
 
-sudo -u www-data npm install --production=false --cache "$NPM_CACHE_DIR"
+sudo -u www-data npm install --legacy-peer-deps --cache "$NPM_CACHE_DIR"
 sudo -u www-data npm run build
 
 # ── 4. Systemd service (Vite preview on port 4003) ──────────
