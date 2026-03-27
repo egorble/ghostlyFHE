@@ -54,7 +54,19 @@ sudo chown -R www-data:www-data "$APP_DIR"
 echo ""
 echo "► [3/7] Installing dependencies & building..."
 cd "$APP_DIR"
-sudo -u www-data npm install --production=false
+
+# Clean node_modules to avoid ENOTEMPTY errors during npm install
+if [ -d "$APP_DIR/node_modules" ]; then
+  echo "  → Cleaning old node_modules..."
+  sudo rm -rf "$APP_DIR/node_modules"
+fi
+
+# Use dedicated npm cache dir to avoid EACCES on /var/www/.npm
+NPM_CACHE_DIR="/opt/ghostly/.npm-cache"
+sudo mkdir -p "$NPM_CACHE_DIR"
+sudo chown -R www-data:www-data "$NPM_CACHE_DIR"
+
+sudo -u www-data npm install --production=false --cache "$NPM_CACHE_DIR"
 sudo -u www-data npm run build
 
 # ── 4. Systemd service (Vite preview on port 4002) ──────────
